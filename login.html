@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login | NOVATEK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #070b12;
+        --bg-2: #0d1420;
+        --panel: rgba(15, 21, 31, 0.9);
+        --panel-2: rgba(17, 24, 35, 0.95);
+        --line: rgba(255,255,255,0.08);
+        --text: #edf3ff;
+        --muted: #9ca8bc;
+        --blue: #2d6ef6;
+        --blue-2: #123dba;
+        --shadow: rgba(0,0,0,0.46);
+      }
+
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: 'DM Sans', sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 18% 20%, rgba(42, 77, 188, 0.24), transparent 18%),
+          radial-gradient(circle at 82% 24%, rgba(33, 117, 255, 0.2), transparent 20%),
+          linear-gradient(135deg, #070b12 0%, #0a111b 32%, #060a10 100%);
+        display: grid;
+        place-items: center;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button, input { font: inherit; }
+
+      .login-shell {
+        width: min(980px, calc(100% - 32px));
+        min-height: 660px;
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        overflow: hidden;
+        background: rgba(8, 12, 18, 0.8);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.38);
+        backdrop-filter: blur(6px);
+      }
+
+      .brand-panel {
+        position: relative;
+        padding: 32px 34px 26px;
+        background:
+          linear-gradient(180deg, rgba(15,20,30,0.42), rgba(10,14,20,0.74)),
+          radial-gradient(circle at 68% 35%, rgba(27,91,210,0.28), transparent 20%),
+          linear-gradient(140deg, rgba(10,17,26,0.98), rgba(7,11,18,0.94));
+        display: flex;
+        flex-direction: column;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: rgba(45, 110, 246, 0.12);
+        color: #eaf2ff;
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: -0.12em;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .back-link svg {
+        width: 15px;
+        height: 15px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+
+      .promo {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .promo-card {
+        width: min(100%, 430px);
+        background: rgba(13, 20, 28, 0.58);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 26px 22px 18px;
+      }
+
+      .mini-tag {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(45, 110, 246, 0.12);
+        color: #8dbaff;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .promo-card h1 {
+        margin: 22px 0 14px;
+        font-family: 'Manrope', sans-serif;
+        font-size: clamp(34px, 4vw, 56px);
+        line-height: 0.96;
+        letter-spacing: -0.06em;
+      }
+
+      .promo-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .promo-features {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .feature {
+        padding: 14px 10px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.02);
+        text-align: center;
+      }
+
+      .feature strong {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+
+      .feature span {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .form-panel {
+        background: linear-gradient(180deg, rgba(11,16,24,0.98), rgba(9,13,19,0.95));
+        padding: 34px 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .form-wrap {
+        width: 100%;
+        max-width: 360px;
+      }
+
+      .form-wrap h2 {
+        margin: 0 0 10px;
+        font-size: 32px;
+        letter-spacing: -0.05em;
+      }
+
+      .subtitle {
+        margin: 0 0 26px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      label {
+        font-size: 12px;
+        color: #d9e3f8;
+        font-weight: 600;
+      }
+
+      input {
+        width: 100%;
+        height: 52px;
+        border-radius: 14px;
+        border: 1px solid rgba(143,160,192,0.18);
+        background: rgba(255,255,255,0.02);
+        color: var(--text);
+        padding: 0 14px;
+        outline: none;
+        transition: border-color .2s ease, box-shadow .2s ease;
+      }
+
+      input:focus {
+        border-color: rgba(45,110,246,0.9);
+        box-shadow: 0 0 0 4px rgba(45,110,246,0.12);
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: -4px;
+      }
+
+      .checkbox {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .checkbox input {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--blue);
+      }
+
+      .link {
+        color: #7fb1ff;
+        font-size: 12px;
+      }
+
+      .primary {
+        height: 52px;
+        border: 0;
+        border-radius: 14px;
+        background: linear-gradient(180deg, var(--blue) 0%, var(--blue-2) 100%);
+        color: white;
+        font-weight: 700;
+        box-shadow: 0 16px 28px rgba(45,110,246,0.24);
+        cursor: pointer;
+      }
+
+      .primary:hover { filter: brightness(1.04); }
+
+      .divider {
+        position: relative;
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+        margin: 2px 0;
+      }
+
+      .divider::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background: var(--line);
+        z-index: 0;
+      }
+
+      .divider span {
+        position: relative;
+        z-index: 1;
+        background: rgba(9,13,19,0.95);
+        display: inline-block;
+        padding: 0 12px;
+      }
+
+      .socials {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: 10px;
+      }
+
+      .social {
+        display: grid;
+        place-items: center;
+        height: 44px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.02);
+        color: #edf4ff;
+        font-weight: 600;
+        font-size: 12px;
+      }
+
+      .social:hover {
+        border-color: rgba(91,139,255,0.65);
+        background: rgba(45,110,246,0.1);
+      }
+
+      .message {
+        min-height: 18px;
+        margin: -4px 0 0;
+        color: #ff9f9f;
+        font-size: 12px;
+      }
+
+      .signup {
+        margin-top: 18px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 820px) {
+        .login-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .brand-panel {
+          min-height: 300px;
+        }
+
+        .promo-features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-shell">
+      <div class="brand-panel">
+        <div class="topbar">
+          <div class="brand">
+            <span class="brand-mark">N</span>
+            <span>NOVATEK</span>
+          </div>
+          <a class="back-link" href="/signup.html">
+            <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+            <span>Create account</span>
+          </a>
+        </div>
+
+        <div class="promo">
+          <div class="promo-card">
+            <span class="mini-tag">Welcome</span>
+            <h1>Upgrade your setup.</h1>
+            <p>Explore premium tech built for creators, explorers, and everyday life.</p>
+
+            <div class="promo-features">
+              <div class="feature">
+                <strong>4.9/5</strong>
+                <span>Rated</span>
+              </div>
+              <div class="feature">
+                <strong>24/7</strong>
+                <span>Support</span>
+              </div>
+              <div class="feature">
+                <strong>2k+</strong>
+                <span>Devices</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-panel">
+        <div class="form-wrap">
+          <h2>Login</h2>
+          <p class="subtitle">Sign in to continue shopping smarter.</p>
+
+          <form id="loginForm">
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="you@example.com" required />
+            </div>
+
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" type="password" placeholder="Enter your password" required />
+            </div>
+
+            <div class="row">
+              <label class="checkbox">
+                <input id="rememberMe" type="checkbox" />
+                <span>Remember me</span>
+              </label>
+            </div>
+
+            <button class="primary" type="submit">Sign in</button>
+
+            <div class="divider"><span>or continue with</span></div>
+
+            <div class="socials">
+              <a class="social" href="/auth/google" id="googleSignIn">Google</a>
+              <a class="social" href="/auth/apple">Apple</a>
+              <a class="social" href="/auth/x">X</a>
+            </div>
+            <p id="formMessage" class="message" aria-live="polite"></p>
+          </form>
+
+          <div class="signup">
+            New here? <a href="/signup.html" class="link">Create an account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const message = document.getElementById('formMessage');
+        const button = event.currentTarget.querySelector('button[type="submit"]');
+        message.textContent = '';
+        button.disabled = true;
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+
+        try {
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, rememberMe })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Login failed');
+          }
+
+          const requestedPath = new URLSearchParams(window.location.search).get('next');
+          const safeRequestedPath = requestedPath?.startsWith('/') &&
+            !requestedPath.startsWith('//') &&
+            !requestedPath.includes('\\')
+            ? requestedPath
+            : '';
+          window.location.assign(data.user?.role === 'admin' ? '/admin' : safeRequestedPath || '/home');
+        } catch (error) {
+          message.textContent = error.message || 'Unable to log in.';
+          button.disabled = false;
+        }
+      });
+
+      if (new URLSearchParams(window.location.search).has('error')) {
+        document.getElementById('formMessage').textContent = 'Social sign-in could not be completed. Please try again or use email and password.';
+      }
+
+      const googleSignIn = document.getElementById('googleSignIn');
+      const googleSetupMessage = 'Google sign-in needs setup. Add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to your private .env file, then restart the server.';
+      const loginMessage = document.getElementById('formMessage');
+
+      if (new URLSearchParams(window.location.search).get('provider_setup') === 'google') {
+        loginMessage.textContent = googleSetupMessage;
+      }
+
+      fetch('/api/auth/providers')
+        .then((response) => {
+          if (!response.ok) throw new Error('Could not check sign-in provider status.');
+          return response.json();
+        })
+        .then((providers) => {
+          googleSignIn.dataset.configured = String(providers.google);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      googleSignIn.addEventListener('click', (event) => {
+        if (googleSignIn.dataset.configured === 'false') {
+          event.preventDefault();
+          loginMessage.textContent = googleSetupMessage;
+        }
+      });
+    </script>
+  </body>
+</html>

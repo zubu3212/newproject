@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b11" />
+    <title>Your cart | NOVATEK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bg:#080b11; --panel:#121922; --line:rgba(255,255,255,.09); --text:#edf3ff; --muted:#9da9bc; --blue:#2d6ef6; --green:#9fdab7; --danger:#ffadad; }
+      * { box-sizing:border-box; }
+      body { margin:0; min-height:100vh; color:var(--text); font:14px 'DM Sans',sans-serif; background:radial-gradient(circle at 72% 4%,rgba(28,70,148,.28),transparent 23%),linear-gradient(180deg,#060a10,#0a1018); }
+      a,button,input,textarea { font:inherit; color:inherit; }
+      a { text-decoration:none; }
+      header { border-bottom:1px solid var(--line); background:rgba(7,11,17,.9); }
+      .wrap { width:min(1140px,calc(100% - 40px)); margin:auto; }
+      .nav { min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+      .brand { font:800 15px Manrope,sans-serif; letter-spacing:.19em; }
+      .brand b { margin-right:8px; color:#5588ff; font-size:24px; }
+      nav { display:flex; gap:24px; color:#dce6f6; font-size:13px; }
+      .nav-end { display:flex; align-items:center; gap:16px; color:var(--muted); }
+      .logout { padding:9px 14px; border:1px solid var(--line); border-radius:999px; background:#121922; cursor:pointer; }
+      main { padding:56px 0 80px; }
+      .eyebrow { color:#638dff; text-transform:uppercase; letter-spacing:.2em; font-size:11px; font-weight:700; }
+      h1 { margin:8px 0 28px; font:800 clamp(36px,5vw,58px)/1.05 Manrope,sans-serif; letter-spacing:-.05em; }
+      .layout { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(300px,.8fr); gap:20px; align-items:start; }
+      .items,.summary { padding:20px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(160deg,#151c27,#10151d); }
+      .cart-item { display:grid; grid-template-columns:106px minmax(0,1fr) auto; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid var(--line); }
+      .cart-item:first-child { padding-top:0; }
+      .cart-item:last-child { padding-bottom:0; border-bottom:0; }
+      .cart-item img { width:106px; height:92px; padding:8px; border-radius:12px; background:#0b111a; object-fit:contain; }
+      .item-name { margin:0 0 7px; font-size:15px; font-weight:600; }
+      .unit-price { color:var(--muted); font-size:13px; }
+      .quantity { display:inline-flex; align-items:center; gap:12px; margin-top:12px; padding:5px; border:1px solid var(--line); border-radius:999px; }
+      .quantity button { width:27px; height:27px; border:0; border-radius:50%; background:#212c3b; cursor:pointer; }
+      .quantity span { min-width:16px; text-align:center; }
+      .line-end { display:grid; justify-items:end; gap:12px; }
+      .line-total { font-weight:700; white-space:nowrap; }
+      .remove { padding:0; border:0; color:#ffb0b0; background:none; font-size:12px; cursor:pointer; }
+      .summary h2 { margin:0 0 18px; font:700 20px Manrope,sans-serif; }
+      .totals { display:grid; gap:12px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+      .total-row { display:flex; justify-content:space-between; gap:12px; color:var(--muted); }
+      .total-row.grand { padding-top:15px; color:var(--text); font-size:17px; font-weight:700; }
+      .summary-note { color:var(--muted); font-size:12px; line-height:1.5; }
+      .checkout-form { display:grid; gap:12px; margin-top:20px; }
+      .checkout-form h3 { margin:0 0 3px; font-size:15px; }
+      .field { display:grid; gap:6px; }
+      .field label { color:#d9e3f8; font-size:12px; font-weight:600; }
+      .field input { width:100%; height:42px; padding:0 12px; border:1px solid #344157; border-radius:10px; color:var(--text); background:#0b111a; outline:0; }
+      .field input:focus { border-color:#5b8bff; box-shadow:0 0 0 3px #2d6ef622; }
+      .place-order { min-height:46px; margin-top:4px; border:0; border-radius:999px; color:white; background:linear-gradient(180deg,#2d6ef6,#1749c8); font-weight:700; cursor:pointer; }
+      .place-order:disabled { opacity:.6; cursor:wait; }
+      .message { min-height:18px; margin:0; color:var(--green); font-size:12px; }
+      .message.error { color:var(--danger); }
+      .empty,.success { padding:44px 24px; border:1px solid var(--line); border-radius:18px; background:var(--panel); text-align:center; }
+      .empty h2,.success h2 { margin-top:0; }
+      .continue { display:inline-flex; margin-top:12px; padding:12px 18px; border-radius:999px; background:var(--blue); font-weight:700; }
+      @media(max-width:800px) { .layout { grid-template-columns:1fr; } }
+      @media(max-width:580px) { .wrap { width:calc(100% - 24px); } .nav { flex-wrap:wrap; padding:14px 0; } nav { order:3; width:100%; flex-wrap:wrap; gap:12px; font-size:12px; } .nav-end { margin-left:auto; } main { padding-top:38px; } .items,.summary { padding:15px; } .cart-item { grid-template-columns:74px minmax(0,1fr) auto; gap:10px; } .cart-item img { width:74px; height:78px; } .line-end { gap:8px; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="/home"><b>N</b>NOVATEK</a>
+        <nav aria-label="Main navigation">
+          <a href="/shop">Shop</a><a href="/categories">Categories</a><a href="/new-arrivals">New Arrivals</a><a href="/deals">Deals</a><a href="/support">Support</a>
+        </nav>
+        <div class="nav-end"><a href="/profile" id="accountName">Account</a><form action="/auth/logout" method="post"><button class="logout" type="submit">Sign out</button></form></div>
+      </div>
+    </header>
+    <main class="wrap">
+      <p class="eyebrow">YOUR NOVATEK BAG</p>
+      <h1>Shopping cart</h1>
+      <div id="cartRoot" aria-live="polite"></div>
+    </main>
+    <script>
+      const root = document.getElementById('cartRoot');
+      const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+      })[character]);
+      const money = cents => `$${(cents / 100).toFixed(2)}`;
+      let cartItems = [];
+      let currentUser = null;
+      let currentProfile = null;
+
+      async function request(url, options = {}) {
+        const response = await fetch(url, options);
+        const data = await response.json();
+        if (response.status === 401) {
+          window.location.assign('/login.html');
+          throw new Error('Please sign in to continue.');
+        }
+        if (!response.ok) throw new Error(data.error || 'Request failed.');
+        return data;
+      }
+
+      async function loadCart() {
+        const session = await request('/api/session');
+        currentUser = session.user;
+        if (!currentUser) return window.location.replace('/login.html');
+        document.getElementById('accountName').textContent = currentUser.fullName || currentUser.email || 'Account';
+        const profile = await request('/api/account/profile');
+        currentProfile = profile.profile;
+        const data = await request('/api/cart');
+        cartItems = data.items;
+        renderCart();
+      }
+
+      function renderCart(message = '') {
+        if (!cartItems.length) {
+          root.innerHTML = `<section class="empty"><h2>Your cart is empty</h2><p class="summary-note">Browse the NOVATEK collection and add something you love.</p><a class="continue" href="/shop">Explore products</a>${message ? `<p class="message error">${escapeHtml(message)}</p>` : ''}</section>`;
+          return;
+        }
+
+        const subtotal = cartItems.reduce((sum, item) => sum + Math.round(Number(item.price) * 100) * item.quantity, 0);
+        const shipping = subtotal >= 9900 ? 0 : 900;
+        const rows = cartItems.map(item => `
+          <article class="cart-item">
+            <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.name)}">
+            <div>
+              <h2 class="item-name">${escapeHtml(item.name)}</h2>
+              <span class="unit-price">${money(Math.round(Number(item.price) * 100))} each</span>
+              <div class="quantity" aria-label="Quantity for ${escapeHtml(item.name)}">
+                <button type="button" data-cart-action="decrease" data-product-id="${item.product_id}" aria-label="Decrease quantity">−</button>
+                <span>${item.quantity}</span>
+                <button type="button" data-cart-action="increase" data-product-id="${item.product_id}" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+            <div class="line-end">
+              <span class="line-total">${money(Math.round(Number(item.price) * 100) * item.quantity)}</span>
+              <button class="remove" type="button" data-cart-action="remove" data-product-id="${item.product_id}">Remove</button>
+            </div>
+          </article>
+        `).join('');
+
+        root.innerHTML = `
+          <div class="layout">
+            <section class="items" aria-label="Cart items">${rows}</section>
+            <aside class="summary">
+              <h2>Order summary</h2>
+              <div class="totals">
+                <div class="total-row"><span>Subtotal</span><strong>${money(subtotal)}</strong></div>
+                <div class="total-row"><span>Shipping</span><strong>${shipping ? money(shipping) : 'FREE'}</strong></div>
+                <div class="total-row grand"><span>Total</span><strong>${money(subtotal + shipping)}</strong></div>
+              </div>
+              <p class="summary-note">${subtotal >= 9900 ? 'Free shipping applied.' : `Add ${money(9900 - subtotal)} more for free shipping.`} Payment is cash on delivery.</p>
+              <form id="checkoutForm" class="checkout-form">
+                <h3>Delivery details</h3>
+                <div class="field"><label for="fullName">Full name</label><input id="fullName" name="fullName" required maxlength="150" value="${escapeHtml(currentProfile?.full_name || currentUser?.fullName || '')}"></div>
+                <div class="field"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" required minlength="6" maxlength="30" autocomplete="tel" value="${escapeHtml(currentProfile?.phone || '')}"></div>
+                <div class="field"><label for="address">Street address</label><input id="address" name="address" required minlength="5" maxlength="250" autocomplete="street-address" value="${escapeHtml(currentProfile?.address || '')}"></div>
+                <div class="field"><label for="city">City</label><input id="city" name="city" required minlength="2" maxlength="100" autocomplete="address-level2" value="${escapeHtml(currentProfile?.city || '')}"></div>
+                <div class="field"><label for="postalCode">Postal code</label><input id="postalCode" name="postalCode" required minlength="3" maxlength="20" autocomplete="postal-code" value="${escapeHtml(currentProfile?.postal_code || '')}"></div>
+                <p class="message ${message ? 'error' : ''}" id="checkoutMessage" aria-live="polite">${escapeHtml(message)}</p>
+                <button class="place-order" type="submit">Place cash-on-delivery order</button>
+              </form>
+            </aside>
+          </div>`;
+        document.getElementById('checkoutForm').addEventListener('submit', placeOrder);
+      }
+
+      async function placeOrder(event) {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const button = form.querySelector('button[type="submit"]');
+        const message = document.getElementById('checkoutMessage');
+        message.textContent = '';
+        button.disabled = true;
+        try {
+          const data = await request('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(new FormData(form)))
+          });
+          root.innerHTML = `
+            <section class="success">
+              <p class="eyebrow">ORDER CONFIRMED</p>
+              <h2>Thank you for your order!</h2>
+              <p>Order <strong>${escapeHtml(data.order.order_number)}</strong> is confirmed. Pay ${money(Math.round(Number(data.order.total) * 100))} in cash when it arrives.</p>
+              <a class="continue" href="/shop">Continue shopping</a>
+            </section>`;
+        } catch (error) {
+          message.textContent = error.message;
+          message.classList.add('error');
+          button.disabled = false;
+        }
+      }
+
+      root.addEventListener('click', async event => {
+        const button = event.target.closest('[data-cart-action]');
+        if (!button) return;
+        const productId = Number(button.dataset.productId);
+        const item = cartItems.find(cartItem => cartItem.product_id === productId);
+        if (!item) return;
+        button.disabled = true;
+        try {
+          if (button.dataset.cartAction === 'remove') {
+            await request(`/api/cart/${productId}`, { method: 'DELETE' });
+          } else {
+            const quantity = item.quantity + (button.dataset.cartAction === 'increase' ? 1 : -1);
+            if (quantity < 1) return;
+            await request(`/api/cart/${productId}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ quantity })
+            });
+          }
+          await loadCart();
+        } catch (error) {
+          window.alert(error.message);
+          button.disabled = false;
+        }
+      });
+
+      loadCart().catch(error => {
+        root.innerHTML = `<section class="empty"><p class="message error">${escapeHtml(error.message)}</p></section>`;
+      });
+    </script>
+  </body>
+</html>

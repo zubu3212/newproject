@@ -1,0 +1,1344 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070a10" />
+    <title>NOVATEK — Technology for life</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #080b11;
+        --bg-2: #0c1220;
+        --panel: #121922;
+        --panel-2: #171f2c;
+        --card: #121823;
+        --card-2: #171e2a;
+        --stroke: rgba(255,255,255,0.08);
+        --stroke-strong: rgba(95,123,194,0.4);
+        --text: #edf3ff;
+        --muted: #9da9bc;
+        --muted-2: #7a8396;
+        --blue: #2d6ef6;
+        --blue-2: #123eaf;
+        --blue-soft: rgba(84,130,255,0.18);
+        --green: #37c981;
+        --orange: #ef7846;
+        --shadow: rgba(0,0,0,0.45);
+        --max: 1280px;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 70% 18%, rgba(28,70,148,0.38), transparent 20%),
+          radial-gradient(circle at 60% 30%, rgba(8,24,54,0.8), transparent 45%),
+          linear-gradient(180deg, #060a10 0%, #0a1018 100%);
+        color: var(--text);
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a, button { font: inherit; color: inherit; }
+      a { text-decoration: none; }
+      img { display: block; max-width: 100%; }
+      button { cursor: pointer; }
+
+      .wrap {
+        width: min(var(--max), calc(100% - 64px));
+        margin: auto;
+      }
+
+      header {
+        height: 76px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 5;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: max-content;
+      }
+
+      .brand-mark {
+        color: #e9f0ff;
+        font-size: 30px;
+        line-height: 1;
+        font-weight: 800;
+        letter-spacing: -0.12em;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .brand-mark::before {
+        content: 'N';
+        display: block;
+      }
+
+      .brand-text {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-weight: 700;
+        color: #eaf2ff;
+      }
+
+      .links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        color: rgba(230,239,255,0.82);
+        font-size: 13px;
+        min-width: max-content;
+      }
+
+      .links a {
+        transition: color .2s ease;
+      }
+
+      .links a:hover, .subtle-link:hover { color: #7bb0ff; }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-left: auto;
+      }
+
+      .icon-btn {
+        position: relative;
+        width: 26px;
+        height: 26px;
+        border: 0;
+        background: transparent;
+        color: rgba(236,241,250,0.86);
+        display: grid;
+        place-items: center;
+        padding: 0;
+      }
+
+      .icon-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.8;
+      }
+
+      .cart-count {
+        position: absolute;
+        right: -8px;
+        top: -5px;
+        min-width: 16px;
+        height: 16px;
+        padding: 0 4px;
+        background: var(--blue);
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        font-size: 9px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 630px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background:
+          radial-gradient(ellipse at 75% 48%, rgba(10,77,185,0.28), transparent 24%),
+          linear-gradient(105deg, #070d14 0%, #0b111c 29%, #0b101b 63%, #070b11 100%);
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(6,9,14,0.96) 0%, rgba(6,9,14,0.82) 22%, rgba(6,9,14,0.22) 58%, rgba(6,9,14,0.28) 100%);
+      }
+
+      .hero .wrap {
+        position: relative;
+        z-index: 1;
+        width: min(var(--max), calc(100% - 64px));
+      }
+
+      .hero-inner {
+        display: flex;
+        align-items: center;
+        min-height: 630px;
+        position: relative;
+      }
+
+      .hero-copy {
+        width: 52%;
+        padding: 54px 0 84px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: #5f86ff;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 11px;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-family: 'Manrope', sans-serif;
+        font-size: clamp(52px, 5.8vw, 88px);
+        line-height: .93;
+        letter-spacing: -0.06em;
+        font-weight: 800;
+      }
+
+      .hero p {
+        max-width: 410px;
+        margin: 18px 0 28px;
+        color: rgba(192,200,214,0.9);
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 18px;
+        padding: 15px 24px 15px 22px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #2c6ef6 0%, #2259d8 100%);
+        box-shadow: 0 18px 26px rgba(32,92,226,0.25);
+        border: 0;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        transition: transform .2s ease, filter .2s ease;
+      }
+
+      .primary:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.07);
+      }
+
+      .text-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        color: #ebf4ff;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .arrow {
+        width: 18px;
+        height: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .arrow svg {
+        width: 17px;
+        height: 17px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+
+      .hero-art {
+        position: absolute;
+        right: -4%;
+        top: 18px;
+        width: 58%;
+        height: 540px;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .headphones {
+        position: absolute;
+        right: 2%;
+        bottom: 38px;
+        width: 650px;
+        height: 340px;
+        filter: drop-shadow(0 26px 26px rgba(0,0,0,0.45));
+      }
+
+      .headphone-band {
+        position: absolute;
+        left: 50%;
+        top: 18px;
+        width: 440px;
+        height: 210px;
+        transform: translateX(-50%);
+        border: 18px solid #060a10;
+        border-bottom: 0;
+        border-radius: 200px 200px 0 0;
+        background: linear-gradient(180deg, rgba(120,130,145,0.4), rgba(6,10,15,0.2));
+        box-shadow: inset 0 0 0 1px rgba(250,250,250,0.04), 0 0 18px rgba(255,255,255,0.03);
+      }
+
+      .headphone-band::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 5px;
+        width: 380px;
+        height: 150px;
+        transform: translateX(-50%);
+        border: 16px solid rgba(44,52,62,0.84);
+        border-bottom: 0;
+        border-radius: 220px 220px 0 0;
+      }
+
+      .earcup {
+        position: absolute;
+        top: 140px;
+        width: 180px;
+        height: 200px;
+        border-radius: 38% 42% 48% 48%;
+        background: linear-gradient(145deg, #0a0e15 0%, #1a212b 20%, #0e151d 42%, #111924 100%);
+        box-shadow: inset 12px 8px 18px rgba(255,255,255,0.06), inset -18px -18px 18px rgba(0,0,0,0.45), 0 8px 18px rgba(0,0,0,0.25);
+      }
+
+      .earcup::before {
+        content: "";
+        position: absolute;
+        inset: 12px 16px 18px;
+        border-radius: 36% 38% 46% 46%;
+        background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(6,12,18,0.88));
+      }
+
+      .earcup::after {
+        content: "";
+        position: absolute;
+        inset: 42px 40px 46px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.18), rgba(14,20,29,0.65) 36%, rgba(3,6,10,0.96) 60%);
+      }
+
+      .earcup.left { left: 94px; }
+      .earcup.right { right: 94px; }
+
+      .headphone-bridge {
+        position: absolute;
+        top: 120px;
+        left: 50%;
+        width: 90px;
+        height: 100px;
+        transform: translateX(-50%);
+        border-radius: 0 0 46px 46px;
+        background: linear-gradient(180deg, rgba(17,21,28,0.9), rgba(8,11,17,0.9));
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+      }
+
+      .blue-glow {
+        position: absolute;
+        left: 50%;
+        bottom: -18px;
+        width: 760px;
+        height: 86px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: rgba(39,127,254,0.22);
+        box-shadow: 0 0 28px rgba(35,141,255,0.3), 0 0 70px rgba(34,106,198,0.22);
+        filter: blur(18px);
+      }
+
+      .blue-ring {
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        width: 720px;
+        height: 84px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        border: 3px solid rgba(69,166,255,0.7);
+      }
+
+      .blue-ring::before {
+        content: "";
+        position: absolute;
+        inset: 18px 28px 18px 28px;
+        border-radius: 50%;
+        border: 1px solid rgba(32,170,255,0.6);
+      }
+
+      .benefits {
+        position: relative;
+        z-index: 2;
+        margin-top: -18px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0,1fr));
+        gap: 0;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 18px;
+        background: rgba(15,18,25,0.92);
+        box-shadow: 0 28px 40px rgba(0,0,0,0.22);
+        backdrop-filter: blur(8px);
+      }
+
+      .benefit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        min-height: 88px;
+        padding: 18px 16px;
+        border-right: 1px solid rgba(255,255,255,0.05);
+      }
+
+      .benefit:last-child { border-right: 0; }
+
+      .benefit-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #5d86ff;
+        width: 28px;
+        height: 28px;
+      }
+
+      .benefit-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.7;
+      }
+
+      .benefit-text strong {
+        display: block;
+        font-weight: 600;
+        font-size: 13px;
+        color: #eff4ff;
+      }
+
+      .benefit-text span {
+        display: block;
+        margin-top: 2px;
+        color: rgba(164,174,188,0.85);
+        font-size: 11px;
+      }
+
+      main {
+        padding-top: 52px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-family: 'Manrope', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+      }
+
+      .subtle-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(234,240,248,0.75);
+        font-size: 12px;
+        transition: color .2s ease;
+      }
+
+      .subtle-link svg {
+        width: 15px;
+        height: 15px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+
+      .categories {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0,1fr));
+        gap: 12px;
+      }
+
+      .category {
+        display: block;
+        position: relative;
+        height: 170px;
+        padding: 12px 10px 14px;
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(18,24,33,0.96), rgba(12,17,24,0.96));
+        overflow: hidden;
+        transition: transform .2s ease, border-color .2s ease;
+      }
+
+      .category:hover {
+        transform: translateY(-4px);
+        border-color: rgba(97,130,231,0.7);
+      }
+      .category:focus-visible { outline:2px solid #8dbaff; outline-offset:3px; }
+
+      .category .thumb {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding-top: 8px;
+      }
+
+      .category .thumb img {
+        width: 94%;
+        height: 118px;
+        object-fit: contain;
+        filter: drop-shadow(0 12px 15px rgba(0,0,0,0.35));
+      }
+
+      .category span {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 16px;
+        text-align: center;
+        font-weight: 500;
+        color: rgba(233,239,247,0.9);
+        font-size: 12px;
+      }
+
+      .products {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .product {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        background: linear-gradient(180deg, rgba(20,24,33,0.92), rgba(12,16,22,0.96));
+        transition: transform .2s ease, border-color .2s ease;
+      }
+
+      .product:hover {
+        transform: translateY(-4px);
+        border-color: rgba(104,137,227,0.8);
+      }
+
+      .product-visual {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        padding: 14px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 55%, rgba(174,189,219,0.18), transparent 52%), linear-gradient(180deg, #f4f6f9, #e7ebf1);
+      }
+
+      .product-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        border-radius: 10px;
+      }
+
+      .badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: .03em;
+        z-index: 2;
+        color: #eef6ff;
+        background: #2b6ef6;
+      }
+
+      .badge.orange { background: #ef7846; }
+      .badge.green { background: #3ab06d; }
+
+      .product-info {
+        flex: 1;
+        min-height: 76px;
+        padding: 0 14px 13px;
+      }
+
+      .product-info h3 {
+        margin: 8px 0 6px;
+        font-size: 15px;
+        font-weight: 500;
+        color: rgba(239,245,255,0.9);
+      }
+
+      .price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        color: rgba(234,241,250,0.95);
+      }
+
+      .price {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 6px;
+        font-weight: 700;
+        font-size: 15px;
+      }
+
+      .price small {
+        font-size: 11px;
+        color: rgba(175,184,197,0.88);
+      }
+
+      .old-price {
+        color: rgba(133,145,165,0.86);
+        font-size: 12px;
+        text-decoration: line-through;
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 8px;
+        padding: 0 14px 14px;
+      }
+
+      .product-actions button {
+        flex: 1;
+        min-width: 0;
+        min-height: 42px;
+        padding: 8px 10px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 10px;
+        color: #eff5ff;
+        background: rgba(34,42,56,0.86);
+        font-size: 12px;
+        font-weight: 700;
+        transition: background .2s ease, border-color .2s ease;
+      }
+
+      .product-actions button:last-child {
+        border-color: var(--blue);
+        background: var(--blue);
+      }
+
+      .product-actions button:hover { filter: brightness(1.12); }
+      .product-actions button:focus-visible { outline: 2px solid #a9c5ff; outline-offset: 2px; }
+      .product-actions button:disabled {
+        opacity: .6;
+        cursor: wait;
+      }
+
+      .store-message {
+        min-height: 18px;
+        margin: 8px 0 0;
+        color: #9fdab7;
+        font-size: 12px;
+      }
+
+      .add-cart {
+        position: absolute;
+        right: 14px;
+        bottom: 16px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(19,25,34,0.9);
+        display: grid;
+        place-items: center;
+        color: #eff5ff;
+        transition: background .2s ease, border-color .2s ease;
+      }
+
+      .add-cart:hover {
+        background: var(--blue);
+        border-color: var(--blue);
+      }
+
+      .add-cart svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+
+      .care {
+        margin-top: 32px;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 18px;
+        background: radial-gradient(circle at 72% 52%, rgba(54,87,196,0.25), transparent 18%), linear-gradient(90deg, rgba(18,22,34,0.96), rgba(12,17,24,0.96));
+        position: relative;
+        min-height: 315px;
+        overflow: hidden;
+      }
+
+      .care-inner {
+        display: flex;
+        align-items: center;
+        min-height: 315px;
+        padding: 28px 32px 20px 32px;
+      }
+
+      .care-copy {
+        width: 42%;
+        position: relative;
+        z-index: 2;
+      }
+
+      .care .eyebrow {
+        margin-bottom: 12px;
+        letter-spacing: 0.18em;
+        font-size: 10px;
+      }
+
+      .care h2 {
+        margin: 0;
+        font-family: 'Manrope', sans-serif;
+        font-size: clamp(30px, 3vw, 58px);
+        line-height: 1.04;
+        letter-spacing: -0.06em;
+      }
+
+      .care p {
+        max-width: 420px;
+        color: rgba(185,194,209,0.9);
+        font-size: 14px;
+        line-height: 1.55;
+        margin: 14px 0 18px;
+      }
+
+      .care .primary {
+        padding: 12px 18px;
+      }
+
+      .care-art {
+        position: absolute;
+        right: 18px;
+        bottom: 0;
+        width: 56%;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        pointer-events: none;
+      }
+
+      .shield-wrap {
+        position: relative;
+        width: 420px;
+        height: 260px;
+        bottom: -12px;
+      }
+
+      .shield {
+        position: absolute;
+        left: 50%;
+        bottom: 8px;
+        width: 260px;
+        height: 220px;
+        transform: translateX(-50%);
+        border-radius: 26% 26% 38% 38% / 32% 32% 48% 48%;
+        background: linear-gradient(180deg, rgba(30,127,249,0.95), rgba(8,20,61,0.8) 70%);
+        box-shadow: 0 0 44px rgba(31,116,255,0.28);
+        clip-path: polygon(50% 0%, 92% 18%, 100% 70%, 50% 100%, 0 70%, 8% 18%);
+      }
+
+      .shield::before {
+        content: "";
+        position: absolute;
+        inset: 18px;
+        border-radius: 25% 25% 34% 34% / 28% 28% 44% 44%;
+        background: linear-gradient(180deg, rgba(18,28,45,0.7), rgba(9,16,30,0.88));
+        clip-path: polygon(50% 0%, 92% 18%, 100% 70%, 50% 100%, 0 70%, 8% 18%);
+      }
+
+      .shield::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 54%;
+        width: 120px;
+        height: 120px;
+        transform: translate(-50%, -50%);
+        border: 12px solid rgba(51,170,255,0.9);
+        border-radius: 18px;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+        rotate: 45deg;
+      }
+
+      .check {
+        position: absolute;
+        left: 50%;
+        top: 53%;
+        width: 76px;
+        height: 38px;
+        transform: translate(-50%, -50%) rotate(-40deg);
+        border-left: 10px solid rgba(194,227,255,0.95);
+        border-bottom: 10px solid rgba(194,227,255,0.95);
+        border-radius: 4px;
+        z-index: 2;
+      }
+
+      .device {
+        position: absolute;
+        border-radius: 18px;
+        background: linear-gradient(145deg, rgba(155,166,184,0.26), rgba(10,13,22,0.94));
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 18px 30px rgba(0,0,0,0.22);
+      }
+
+      .device.laptop {
+        width: 180px;
+        height: 110px;
+        left: 42px;
+        bottom: 46px;
+        border-radius: 12px 12px 10px 10px;
+      }
+
+      .device.laptop::before {
+        content: "";
+        position: absolute;
+        left: 30px;
+        right: 30px;
+        top: 16px;
+        bottom: 16px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(75,101,160,0.18), rgba(16,21,31,0.4));
+      }
+
+      .device.laptop::after {
+        content: "";
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: -12px;
+        height: 12px;
+        border-radius: 0 0 12px 12px;
+        background: linear-gradient(180deg, rgba(9,15,21,0.8), rgba(0,0,0,0.92));
+      }
+
+      .device.watch {
+        width: 68px;
+        height: 68px;
+        right: 42px;
+        bottom: 46px;
+        border-radius: 18px;
+      }
+
+      .device.watch::before {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border-radius: 12px;
+        background: linear-gradient(145deg, rgba(29,118,255,0.35), rgba(8,12,20,0.95));
+      }
+
+      .device.watch::after {
+        content: "09";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+        color: rgba(240,245,255,0.88);
+        letter-spacing: -0.08em;
+      }
+
+      .meta-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0,1fr));
+        gap: 14px;
+        padding: 18px 0 46px;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 92px;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        background: linear-gradient(180deg, rgba(18,25,35,0.96), rgba(12,17,24,0.96));
+        padding: 16px 18px;
+      }
+
+      .meta-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        color: #4a7dff;
+        flex: none;
+      }
+
+      .meta-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.8;
+      }
+
+      .meta-copy strong {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .meta-copy span {
+        display: block;
+        margin-top: 4px;
+        color: rgba(166,177,196,0.85);
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      @media (max-width: 1100px) {
+        .links { gap: 18px; }
+        .hero-copy { width: 44%; }
+        .hero-art { width: 62%; }
+        .categories { grid-template-columns: repeat(3, minmax(0,1fr)); }
+        .products { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .meta-row { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .care-copy { width: 48%; }
+      }
+
+      @media (max-width: 780px) {
+        .wrap { width: min(var(--max), calc(100% - 28px)); }
+        header { height: auto; min-height: 76px; }
+        .nav { gap: 10px; flex-wrap: wrap; padding: 12px 0; }
+        .links { display: flex; order: 3; width: 100%; gap: 16px; overflow-x: auto; padding: 4px 0 8px; font-size: 12px; }
+        .nav-actions { gap: 12px; }
+        .hero { min-height: 540px; }
+        .hero-inner { display: block; min-height: 540px; }
+        .hero-copy {
+          width: 100%;
+          padding-top: 42px;
+          padding-bottom: 24px;
+        }
+        .hero-art {
+          position: relative;
+          right: auto;
+          top: auto;
+          width: 100%;
+          height: 260px;
+          margin-top: -20px;
+        }
+        .headphones {
+          right: 50%;
+          transform: translateX(50%);
+          scale: .75;
+          bottom: -6px;
+        }
+        .benefits { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .benefit:nth-child(2n) { border-right: 0; }
+        .categories { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .meta-row { grid-template-columns: 1fr; }
+        .care-inner { display: block; padding: 20px 20px 120px; }
+        .care-copy { width: 100%; }
+        .care-art { width: 100%; height: 160px; right: 0; bottom: 0; }
+        .shield-wrap { width: 100%; }
+      }
+
+      @media (max-width: 520px) {
+        .products { grid-template-columns: 1fr; gap: 14px; }
+        .product-visual { aspect-ratio: 4 / 3; }
+        .product-actions button { min-height: 46px; font-size: 13px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="/home" aria-label="NOVATEK home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-text">NOVATEK</span>
+        </a>
+
+        <nav class="links" aria-label="Main navigation">
+          <a href="/shop">Shop</a>
+          <a href="/categories">Categories</a>
+          <a href="/new-arrivals">New Arrivals</a>
+          <a href="/deals">Deals</a>
+          <a href="/support">Support</a>
+        </nav>
+
+        <div class="nav-actions" aria-label="Actions">
+          <button class="icon-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="5.5"></circle><path d="M16 16l5 5"></path></svg>
+          </button>
+          <a class="icon-btn" href="/profile" aria-label="Account">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c1.8-3.2 5-4.8 8-4.8S18.2 16.8 20 20"></path></svg>
+          </a>
+          <form action="/auth/logout" method="post">
+            <button class="icon-btn" type="submit" aria-label="Sign out" title="Sign out">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5"></path><path d="M15 12H3"></path><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path></svg>
+            </button>
+          </form>
+          <a class="icon-btn" href="/cart" aria-label="Shopping cart">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h2l2.1 8.3A2 2 0 0 0 9 15h8.8a2 2 0 0 0 1.9-1.5L22 7H7"></path><circle cx="10" cy="18.5" r="1.5"></circle><circle cx="18" cy="18.5" r="1.5"></circle></svg>
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Featured collection">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">Technology for life</p>
+          <h1>Upgrade<br />Your World</h1>
+          <p>Discover innovative tech that powers your lifestyle.</p>
+          <div class="buttons">
+            <a class="primary" href="/shop">
+              <span>Shop Now</span>
+              <span class="arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="M13 5l7 7-7 7"></path></svg>
+              </span>
+            </a>
+            <a class="text-button" href="/deals">
+              <span>Explore Deals</span>
+              <span class="arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="M13 5l7 7-7 7"></path></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="headphones">
+            <div class="headphone-band"></div>
+            <div class="headphone-bridge"></div>
+            <div class="earcup left"></div>
+            <div class="earcup right"></div>
+            <div class="blue-glow"></div>
+            <div class="blue-ring"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="benefits" aria-label="Store benefits">
+        <div class="benefit">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5Z"></path><path d="M3 12l9 5 9-5"></path><path d="M3 16l9 5 9-5"></path></svg>
+          </div>
+          <div class="benefit-text">
+            <strong>Free Shipping</strong>
+            <span>On all orders over $99</span>
+          </div>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 11V6.5A5 5 0 0 1 12 2a5 5 0 0 1 5 4.5V11"></path><rect x="4" y="11" width="16" height="11" rx="2"></rect><path d="M12 15v3"></path></svg>
+          </div>
+          <div class="benefit-text">
+            <strong>Secure Checkout</strong>
+            <span>100% secure payments</span>
+          </div>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 4v8l4 4"></path><circle cx="12" cy="12" r="9"></circle></svg>
+          </div>
+          <div class="benefit-text">
+            <strong>Easy Returns</strong>
+            <span>30-day return policy</span>
+          </div>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path><circle cx="12" cy="12" r="8"></circle></svg>
+          </div>
+          <div class="benefit-text">
+            <strong>Expert Support</strong>
+            <span>24/7 customer service</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Shop By Category</h2>
+          <a class="subtle-link" href="/categories">
+            <span>View All</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="M13 5l7 7-7 7"></path></svg>
+          </a>
+        </div>
+
+        <div id="categoriesGrid" class="categories" aria-label="Categories">
+          <a class="category" href="/shop?category=Smartphones">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80" alt="Smartphones" />
+            </div>
+            <span>Smartphones</span>
+          </a>
+
+          <a class="category" href="/shop?category=Laptops">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80" alt="Laptops" />
+            </div>
+            <span>Laptops</span>
+          </a>
+
+          <a class="category" href="/shop?category=Audio">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=600&q=80" alt="Audio" />
+            </div>
+            <span>Audio</span>
+          </a>
+
+          <a class="category" href="/shop?category=Wearables">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" alt="Wearables" />
+            </div>
+            <span>Wearables</span>
+          </a>
+
+          <a class="category" href="/shop?category=Accessories">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Accessories" />
+            </div>
+            <span>Accessories</span>
+          </a>
+
+          <a class="category" href="/shop?category=Smart%20Home">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=600&q=80" alt="Smart home" />
+            </div>
+            <span>Smart Home</span>
+          </a>
+        </div>
+
+        <div class="section-head" style="margin-top: 34px;">
+          <h2>Featured Products</h2>
+          <a class="subtle-link" href="/shop">
+            <span>View All</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="M13 5l7 7-7 7"></path></svg>
+          </a>
+        </div>
+
+        <div id="productsGrid" class="products" aria-label="Featured products"></div>
+
+        <section class="care" aria-label="Novatek care plans">
+          <div class="care-inner">
+            <div class="care-copy">
+              <p class="eyebrow">NOVATEK CARE+</p>
+              <h2>Complete Protection<br />For Your Devices</h2>
+              <p>Extended warranty, accidental damage protection, and priority support.</p>
+              <button class="primary" type="button">
+                <span>Learn More</span>
+                <span class="arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="M13 5l7 7-7 7"></path></svg>
+                </span>
+              </button>
+            </div>
+
+            <div class="care-art" aria-hidden="true">
+              <div class="shield-wrap">
+                <div class="device laptop"></div>
+                <div class="shield"></div>
+                <div class="check"></div>
+                <div class="device watch"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="meta-row" aria-label="Store advantages">
+          <article class="meta-item">
+            <div class="meta-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 12V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"></path><path d="M3 12h18v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7Z"></path><path d="M8 15h8"></path></svg>
+            </div>
+            <div class="meta-copy">
+              <strong>Trade-in &amp; Save</strong>
+              <span>Upgrade and save with trade-in</span>
+            </div>
+          </article>
+
+          <article class="meta-item">
+            <div class="meta-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path><path d="M8 15h2"></path></svg>
+            </div>
+            <div class="meta-copy">
+              <strong>Flexible Payments</strong>
+              <span>Buy now, pay later with easy EMIs</span>
+            </div>
+          </article>
+
+          <article class="meta-item">
+            <div class="meta-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 10h14v9H5z"></path><path d="M8 7V5a4 4 0 0 1 8 0v2"></path><path d="M12 13v3"></path></svg>
+            </div>
+            <div class="meta-copy">
+              <strong>Gift Cards</strong>
+              <span>The perfect gift for every tech lover</span>
+            </div>
+          </article>
+
+          <article class="meta-item">
+            <div class="meta-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 18V6l8-3 8 3v12"></path><path d="M9 20v-7h6v7"></path><path d="M12 8v3"></path></svg>
+            </div>
+            <div class="meta-copy">
+              <strong>Student Discounts</strong>
+              <span>Exclusive deals for students</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const categoriesGrid = document.getElementById('categoriesGrid');
+        const productsGrid = document.getElementById('productsGrid');
+        const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[character]);
+        const updateCartCount = async () => {
+          const response = await fetch('/api/cart');
+          if (response.status === 401) return window.location.replace('/login.html');
+          if (!response.ok) throw new Error('Could not load cart count.');
+          const cart = await response.json();
+          const count = document.getElementById('cartCount');
+          if (count) count.textContent = cart.count;
+        };
+
+        if (categoriesGrid) {
+          try {
+            const response = await fetch('/api/categories');
+            if (response.status === 401) return window.location.replace('/login.html');
+            if (!response.ok) throw new Error('Could not load categories.');
+            const categories = await response.json();
+            categoriesGrid.innerHTML = categories.map(category => `
+              <article class="category">
+                <div class="thumb">
+                  <img src="${escapeHtml(category.image_url || '')}" alt="${escapeHtml(category.name)}" />
+                </div>
+                <span>${escapeHtml(category.name)}</span>
+              </article>
+            `).join('');
+          } catch (error) {
+            console.error('Failed to load categories', error);
+          }
+        }
+
+        if (productsGrid) {
+          try {
+            const response = await fetch('/api/products');
+            if (response.status === 401) return window.location.replace('/login.html');
+            if (!response.ok) throw new Error('Could not load products.');
+            const products = await response.json();
+            productsGrid.innerHTML = products.map(product => `
+              <article class="product">
+                <div class="product-visual">
+                  ${product.badge ? `<span class="badge ${escapeHtml(product.badge_type || '')}">${escapeHtml(product.badge)}</span>` : ''}
+                  <img src="${escapeHtml(product.image_url || '')}" alt="${escapeHtml(product.name)}" loading="lazy" />
+                </div>
+                <div class="product-info">
+                  <h3>${escapeHtml(product.name)}</h3>
+                  <div class="price-row">
+                    <span class="price">$${Number(product.price).toFixed(2)}</span>
+                    ${product.old_price ? `<span class="old-price">$${Number(product.old_price).toFixed(2)}</span>` : ''}
+                  </div>
+                </div>
+                <div class="product-actions">
+                  <button type="button" data-product-id="${product.id}" data-cart-action="add">Add to cart</button>
+                  <button type="button" data-product-id="${product.id}" data-cart-action="buy">Buy now</button>
+                </div>
+              </article>
+            `).join('');
+            const fallbackImage = 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 640 480%27%3E%3Crect width=%27640%27 height=%27480%27 fill=%27%23edf1f6%27/%3E%3Cpath d=%27M250 165h140v150H250z%27 rx=%2718%27 fill=%27%23cbd5e1%27/%3E%3Ccircle cx=%27320%27 cy=%27240%27 r=%2732%27 fill=%27%23f8fafc%27/%3E%3Ctext x=%27320%27 y=%27360%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23475569%27%3ENOVATEK%3C/text%3E%3C/svg%3E';
+            productsGrid.querySelectorAll('.product-visual img').forEach(image => {
+              image.addEventListener('error', () => {
+                if (image.dataset.fallbackApplied) return;
+                image.dataset.fallbackApplied = 'true';
+                image.src = fallbackImage;
+              });
+            });
+          } catch (error) {
+            console.error('Failed to load products', error);
+          }
+        }
+        try {
+          await updateCartCount();
+        } catch (error) {
+          console.error('Failed to load cart count', error);
+        }
+      });
+
+      document.getElementById('productsGrid').addEventListener('click', async event => {
+        const button = event.target.closest('[data-cart-action]');
+        if (!button) return;
+        button.disabled = true;
+        try {
+          const response = await fetch('/api/cart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productId: Number(button.dataset.productId) })
+          });
+          const result = await response.json();
+          if (response.status === 401) return window.location.assign('/login.html');
+          if (!response.ok) throw new Error(result.error || 'Could not add product to cart.');
+          if (button.dataset.cartAction === 'buy') return window.location.assign('/cart');
+          const cart = await fetch('/api/cart').then(response => response.json());
+          document.getElementById('cartCount').textContent = cart.count;
+          button.textContent = 'Added';
+          window.setTimeout(() => { button.textContent = 'Add to cart'; }, 1300);
+        } catch (error) {
+          window.alert(error.message);
+        } finally {
+          button.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

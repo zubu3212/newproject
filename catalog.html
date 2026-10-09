@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b11" />
+    <title>Shop | NOVATEK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bg:#080b11; --panel:#121922; --line:rgba(255,255,255,.08); --text:#edf3ff; --muted:#9da9bc; --blue:#2d6ef6; }
+      * { box-sizing:border-box; }
+      body { margin:0; min-height:100vh; color:var(--text); font:14px 'DM Sans',sans-serif; background:radial-gradient(circle at 72% 4%,rgba(28,70,148,.28),transparent 23%),linear-gradient(180deg,#060a10,#0a1018); }
+      a,button { color:inherit; font:inherit; }
+      a { text-decoration:none; }
+      .wrap { width:min(1280px,calc(100% - 48px)); margin:auto; }
+      header { border-bottom:1px solid var(--line); background:rgba(7,11,17,.9); }
+      .nav { min-height:74px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+      .brand { font:800 15px Manrope,sans-serif; letter-spacing:.19em; white-space:nowrap; }
+      .brand b { color:#5588ff; font-size:24px; margin-right:8px; }
+      nav { display:flex; align-items:center; gap:26px; color:#dce6f6; font-size:13px; }
+      nav a:hover,.active { color:#83adff; }
+      .nav-end { display:flex; align-items:center; gap:16px; color:var(--muted); white-space:nowrap; }
+      .cart-link { color:var(--text); }
+      .cart-count { display:inline-grid; min-width:20px; height:20px; margin-left:4px; padding:0 5px; place-items:center; border-radius:99px; background:var(--blue); color:white; font-size:11px; }
+      .logout { border:1px solid var(--line); border-radius:999px; padding:9px 14px; background:#121922; cursor:pointer; }
+      main { padding:72px 0 88px; }
+      .eyebrow { color:#638dff; text-transform:uppercase; letter-spacing:.2em; font-weight:700; font-size:11px; }
+      h1 { margin:10px 0; font:800 clamp(36px,6vw,68px)/1.05 Manrope,sans-serif; letter-spacing:-.055em; }
+      .intro { max-width:620px; color:var(--muted); font-size:16px; line-height:1.65; }
+      .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:36px; }
+      .product,.category { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:16px; background:linear-gradient(160deg,#171e29,#10151d); }
+      .product { display:flex; flex-direction:column; }
+      .image { width:100%; aspect-ratio:4 / 3; padding:14px; position:relative; display:grid; place-items:center; overflow:hidden; background:radial-gradient(ellipse at 50% 55%,rgba(67,92,142,.16),transparent 65%),linear-gradient(180deg,#f4f6f9,#e7ebf1); }
+      .image img { width:100%; height:100%; object-fit:contain; border-radius:10px; }
+      .badge { position:absolute; left:12px; top:12px; padding:5px 9px; border-radius:99px; background:#2d6ef6; font-size:10px; }
+      .badge.orange { background:#ef7846; }.badge.green { background:#3ab06d; }
+      .details { flex:1; min-height:76px; padding:0 15px 12px; }
+      .details h2 { margin:4px 0 8px; font-size:15px; font-weight:600; }
+      .price { font-weight:700; }.old { margin-left:8px; color:#828da0; text-decoration:line-through; }
+      .product-actions { display:flex; gap:8px; padding:0 15px 15px; }
+      .product-actions button { flex:1; min-width:0; min-height:42px; padding:8px 10px; border:1px solid rgba(255,255,255,.12); border-radius:10px; color:#eff5ff; background:#222a38; font-size:12px; font-weight:700; cursor:pointer; }
+      .product-actions button:last-child { border-color:var(--blue); background:var(--blue); }
+      .product-actions button:hover { filter:brightness(1.12); }
+      .product-actions button:focus-visible { outline:2px solid #a9c5ff; outline-offset:2px; }
+      .product-actions button:disabled { opacity:.6; cursor:wait; }
+      .notice { color:var(--muted); }
+      .notice.error { color:#ffadad; }
+      .toast { position:fixed; right:22px; bottom:22px; z-index:3; padding:12px 18px; border:1px solid var(--line); border-radius:12px; background:#172333; color:#dfffe9; box-shadow:0 12px 32px #0008; }
+      .category { min-height:195px; padding:15px; display:grid; grid-template-rows:1fr auto; color:var(--text); }
+      .category img { width:100%; height:145px; object-fit:contain; }
+      .category strong { text-align:center; padding:8px 0 1px; }
+      .notice { color:var(--muted); }
+      .support-card { grid-column:1/-1; margin-top:30px; padding:24px; border:1px solid var(--line); border-radius:16px; background:var(--panel); line-height:1.7; }
+      .support-form { max-width:680px; margin-top:24px; display:grid; gap:12px; }
+      .support-form label { display:grid; gap:7px; color:#d9e3f8; font-weight:600; font-size:12px; }
+      .support-form input,.support-form textarea { width:100%; padding:12px 14px; border:1px solid #344157; border-radius:10px; color:var(--text); background:#0b111a; font:inherit; }
+      .support-form textarea { min-height:140px; resize:vertical; }
+      .support-form button { width:max-content; border:0; border-radius:999px; padding:12px 18px; color:white; background:var(--blue); font-weight:700; cursor:pointer; }
+      #supportMessage { color:#9fdab7; }
+      @media(max-width:1100px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+      @media(max-width:850px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } nav { gap:14px; } }
+      @media(max-width:640px) { .wrap { width:calc(100% - 28px); } .nav { padding:14px 0; align-items:flex-start; flex-wrap:wrap; } nav { order:3; width:100%; flex-wrap:wrap; font-size:12px; } .nav-end { margin-left:auto; } main { padding:45px 0; } .grid { gap:10px; } }
+      @media(max-width:480px) { .grid.product-grid { grid-template-columns:1fr; } .product-actions button { min-height:46px; font-size:13px; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="/home"><b>N</b>NOVATEK</a>
+        <nav aria-label="Main navigation">
+          <a href="/shop">Shop</a><a href="/categories">Categories</a><a href="/new-arrivals">New Arrivals</a><a href="/deals">Deals</a><a href="/support">Support</a>
+        </nav>
+        <div class="nav-end"><a class="cart-link" href="/cart">Cart <span class="cart-count" id="cartCount">0</span></a><a href="/profile" id="accountName">Account</a><form action="/auth/logout" method="post"><button class="logout" type="submit">Sign out</button></form></div>
+      </div>
+    </header>
+    <main class="wrap">
+      <p class="eyebrow">NOVATEK STORE</p>
+      <h1 id="pageTitle">Shop all tech</h1>
+      <p id="pageIntro" class="intro">Explore our hand-picked devices and accessories.</p>
+      <div id="pageContent" class="grid" aria-live="polite"></div>
+    </main>
+    <script>
+      const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+      })[character]);
+      const pages = {
+        '/shop': ['Shop all tech', 'Explore our complete collection of phones, laptops, audio, wearables, and more.'],
+        '/categories': ['Shop by category', 'Find the right gear by browsing our product categories.'],
+        '/new-arrivals': ['New arrivals', 'Fresh picks and the latest additions to the NOVATEK collection.'],
+        '/deals': ['Deals & offers', 'Discover current offers and great prices on selected devices.'],
+        '/support': ['Here to help', 'Our support team is ready to help you get the most from your devices.']
+      };
+      const pathname = window.location.pathname;
+      const categoryFilter = new URLSearchParams(window.location.search).get('category')?.trim() || '';
+      const [defaultTitle, defaultIntro] = pages[pathname] || pages['/shop'];
+      const title = pathname === '/shop' && categoryFilter ? `${categoryFilter} collection` : defaultTitle;
+      const intro = pathname === '/shop' && categoryFilter
+        ? `Explore our ${categoryFilter} collection and find the right gear for you.`
+        : defaultIntro;
+      document.title = `${title} | NOVATEK`;
+      document.getElementById('pageTitle').textContent = title;
+      document.getElementById('pageIntro').textContent = intro;
+      document.querySelectorAll('nav a').forEach(link => {
+        if (link.getAttribute('href') === pathname) link.classList.add('active');
+      });
+
+      async function loadPage() {
+        const content = document.getElementById('pageContent');
+        content.classList.toggle('product-grid', pathname !== '/categories' && pathname !== '/support');
+        try {
+          const sessionResponse = await fetch('/api/session');
+          const sessionData = await sessionResponse.json();
+          if (!sessionData.user) return window.location.replace('/login.html');
+          document.getElementById('accountName').textContent = sessionData.user.fullName || sessionData.user.email || 'Account';
+          await updateCartCount();
+          if (pathname === '/support') {
+            content.innerHTML = `
+              <section class="support-card">
+                <h2>Contact NOVATEK Support</h2>
+                <p>Need help with a product, order, or return? Send our team a message and we’ll get back to you.</p>
+                <form id="supportForm" class="support-form">
+                  <label>Subject<input name="subject" required minlength="3" maxlength="160" placeholder="How can we help?"></label>
+                  <label>Message<textarea name="message" required minlength="10" maxlength="5000" placeholder="Include any details that will help our team."></textarea></label>
+                  <button type="submit">Send request</button>
+                  <span id="supportMessage" aria-live="polite"></span>
+                </form>
+              </section>`;
+            document.getElementById('supportForm').addEventListener('submit', async event => {
+              event.preventDefault();
+              const form = event.currentTarget;
+              const submitButton = form.querySelector('button[type="submit"]');
+              const feedback = document.getElementById('supportMessage');
+              submitButton.disabled = true;
+              feedback.textContent = '';
+              try {
+                const response = await fetch('/api/support', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    subject: form.elements.subject.value,
+                    message: form.elements.message.value
+                  })
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'Could not send your request.');
+                feedback.textContent = result.message;
+                form.reset();
+              } catch (error) {
+                feedback.textContent = error.message;
+              } finally {
+                submitButton.disabled = false;
+              }
+            });
+            return;
+          }
+          const endpoint = pathname === '/categories'
+            ? '/api/categories'
+            : `/api/products${categoryFilter ? `?category=${encodeURIComponent(categoryFilter)}` : ''}`;
+          const response = await fetch(endpoint);
+          if (response.status === 401) return window.location.replace('/login.html');
+          if (!response.ok) throw new Error('The store data could not be loaded.');
+          const rows = await response.json();
+          if (pathname === '/categories') {
+            content.innerHTML = rows.map(category => `
+              <a class="category" href="/shop?category=${encodeURIComponent(category.name)}">
+                <img src="${escapeHtml(category.image_url)}" alt="${escapeHtml(category.name)}">
+                <strong>${escapeHtml(category.name)}</strong>
+              </a>
+            `).join('');
+            return;
+          }
+          const products = pathname === '/deals'
+            ? rows.filter(product => product.old_price || product.badge_type === 'green')
+            : pathname === '/new-arrivals'
+              ? rows.filter(product => product.badge_type === 'new')
+              : rows;
+          content.innerHTML = products.length ? products.map(product => `
+            <article class="product">
+              <div class="image">
+                ${product.badge ? `<span class="badge ${escapeHtml(product.badge_type)}">${escapeHtml(product.badge)}</span>` : ''}
+                <img src="${escapeHtml(product.image_url || '')}" alt="${escapeHtml(product.name)}" loading="lazy">
+              </div>
+              <div class="details">
+                <h2>${escapeHtml(product.name)}</h2>
+                <span class="price">$${Number(product.price).toFixed(2)}</span>
+                ${product.old_price ? `<span class="old">$${Number(product.old_price).toFixed(2)}</span>` : ''}
+              </div>
+              <div class="product-actions">
+                <button type="button" data-product-id="${Number(product.id)}" data-cart-action="add">Add to cart</button>
+                <button type="button" data-product-id="${Number(product.id)}" data-cart-action="buy">Buy now</button>
+              </div>
+            </article>
+          `).join('') : '<p class="notice">There are no items to display here yet.</p>';
+          const fallbackImage = 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 640 480%27%3E%3Crect width=%27640%27 height=%27480%27 fill=%27%23edf1f6%27/%3E%3Cpath d=%27M250 165h140v150H250z%27 fill=%27%23cbd5e1%27/%3E%3Ccircle cx=%27320%27 cy=%27240%27 r=%2732%27 fill=%27%23f8fafc%27/%3E%3Ctext x=%27320%27 y=%27360%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23475569%27%3ENOVATEK%3C/text%3E%3C/svg%3E';
+          content.querySelectorAll('.image img').forEach(image => {
+            image.addEventListener('error', () => {
+              if (image.dataset.fallbackApplied) return;
+              image.dataset.fallbackApplied = 'true';
+              image.src = fallbackImage;
+            });
+          });
+        } catch (error) {
+          content.innerHTML = `<p class="notice error">${escapeHtml(error.message)}</p>`;
+        }
+      }
+
+      async function updateCartCount() {
+        const response = await fetch('/api/cart');
+        if (response.status === 401) return window.location.replace('/login.html');
+        if (!response.ok) throw new Error('Unable to load cart.');
+        const cart = await response.json();
+        document.getElementById('cartCount').textContent = cart.count;
+      }
+
+      document.getElementById('pageContent').addEventListener('click', async event => {
+        const button = event.target.closest('[data-cart-action]');
+        if (!button) return;
+        button.disabled = true;
+        try {
+          const response = await fetch('/api/cart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productId: Number(button.dataset.productId) })
+          });
+          const result = await response.json();
+          if (response.status === 401) return window.location.assign('/login.html');
+          if (!response.ok) throw new Error(result.error || 'Could not add this product.');
+          if (button.dataset.cartAction === 'buy') return window.location.assign('/cart');
+          await updateCartCount();
+          button.textContent = 'Added';
+          window.setTimeout(() => { button.textContent = 'Add to cart'; }, 1300);
+        } catch (error) {
+          const toast = document.createElement('p');
+          toast.className = 'toast';
+          toast.textContent = error.message;
+          document.body.append(toast);
+          window.setTimeout(() => toast.remove(), 3500);
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+      loadPage();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b11" />
+    <title>Your account | NOVATEK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme:dark; --bg:#080b11; --panel:#121922; --panel-2:#0d141e; --line:rgba(255,255,255,.09); --text:#edf3ff; --muted:#9da9bc; --blue:#2d6ef6; --green:#9fdab7; --red:#ffadad; }
+      * { box-sizing:border-box; }
+      [hidden] { display:none !important; }
+      body { min-height:100vh; margin:0; color:var(--text); font:14px 'DM Sans',sans-serif; background:radial-gradient(ellipse at 74% 0%,rgba(31,80,175,.24),transparent 32%),linear-gradient(145deg,#080b11,#0a111a 55%,#080b11); }
+      a,button,input { font:inherit; color:inherit; } a { text-decoration:none; }
+      .wrap { width:min(1100px,calc(100% - 40px)); margin:auto; }
+      header { border-bottom:1px solid var(--line); background:rgba(7,11,17,.78); }
+      .nav { min-height:70px; display:flex; align-items:center; justify-content:space-between; gap:22px; }
+      .brand { font:800 15px Manrope,sans-serif; letter-spacing:.18em; }.brand b { margin-right:8px; color:#6d98ff; font-size:24px; }
+      .nav-links { display:flex; gap:22px; color:#c7d2e4; font-size:13px; }.nav-links a:hover,.text-link:hover { color:#8dbaff; }
+      .nav-actions { display:flex; align-items:center; gap:14px; color:var(--muted); }
+      .button,.admin-link { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:9px 14px; border:1px solid #344157; border-radius:10px; color:var(--text); background:#172232; font-weight:700; cursor:pointer; }
+      .primary { border-color:transparent; background:linear-gradient(180deg,#3677ff,#1749c8); }
+      .logout { padding:8px 12px; border:1px solid var(--line); border-radius:999px; color:var(--muted); background:#121922; cursor:pointer; }
+      main { padding:42px 0 76px; }
+      .eyebrow { margin:0 0 9px; color:#7fa5ff; text-transform:uppercase; letter-spacing:.18em; font-size:11px; font-weight:700; }
+      h1,h2,h3,p { margin-top:0; } h1 { margin-bottom:7px; font:800 clamp(32px,5vw,48px)/1.08 Manrope,sans-serif; letter-spacing:-.05em; }
+      .intro { margin:0; color:var(--muted); }
+      .hero { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:25px; border:1px solid var(--line); border-radius:20px; background:linear-gradient(115deg,rgba(34,62,112,.53),rgba(18,25,34,.95) 62%); }
+      .identity { display:flex; align-items:center; gap:18px; min-width:0; }
+      .avatar { display:grid; place-items:center; width:66px; height:66px; flex:none; border:1px solid rgba(132,169,255,.4); border-radius:20px; color:#dce7ff; background:linear-gradient(145deg,#315dab,#182945); font:800 24px Manrope,sans-serif; }
+      .hero h1 { overflow-wrap:anywhere; font-size:clamp(24px,4vw,36px); }.hero-email { margin:0; color:#b6c4da; overflow-wrap:anywhere; }
+      .role { display:inline-flex; margin-top:10px; padding:5px 9px; border:1px solid rgba(132,169,255,.25); border-radius:999px; color:#b6ccff; background:rgba(45,110,246,.12); font-size:11px; font-weight:700; text-transform:capitalize; }
+      .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:18px 0 28px; }
+      .stat,.panel { border:1px solid var(--line); border-radius:16px; background:linear-gradient(155deg,rgba(20,28,40,.96),rgba(14,20,29,.97)); }
+      .stat { padding:17px 19px; }.stat-label { color:var(--muted); font-size:12px; }.stat-value { display:block; margin-top:7px; font:800 26px Manrope,sans-serif; }
+      .columns { display:grid; grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr); align-items:start; gap:18px; }
+      .stack { display:grid; gap:18px; }.panel { padding:22px; }
+      .panel-head { display:flex; align-items:start; justify-content:space-between; gap:12px; margin-bottom:18px; }
+      h2 { margin-bottom:5px; font:700 19px Manrope,sans-serif; }.panel-note { margin:0; color:var(--muted); font-size:12px; line-height:1.55; }
+      .profile-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
+      .profile-display { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
+      .profile-value { min-width:0; padding:12px; border:1px solid var(--line); border-radius:11px; background:rgba(7,12,19,.45); }
+      .profile-value.full { grid-column:1/-1; }.profile-label { display:block; margin-bottom:6px; color:var(--muted); font-size:11px; }
+      .profile-text { display:block; min-height:18px; color:#e8eef9; font-weight:600; overflow-wrap:anywhere; white-space:pre-wrap; }
+      .panel-tools { display:flex; align-items:center; gap:10px; }
+      .form-actions { grid-column:1/-1; display:flex; align-items:center; gap:10px; margin-top:3px; }
+      .field { display:grid; gap:7px; color:#cbd6e8; font-size:12px; font-weight:600; }.field.full { grid-column:1/-1; }
+      .field input { width:100%; min-height:43px; padding:10px 12px; border:1px solid #344157; border-radius:10px; outline:0; background:#0a1018; }
+      .field input:focus,.password-form input:focus { border-color:#5b8bff; box-shadow:0 0 0 3px #2d6ef622; }
+      .field input[readonly] { color:#9da9bc; background:#101720; }.form-footer { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:3px; }
+      .message { min-height:18px; margin:0; color:var(--green); font-size:12px; }.message.error { color:var(--red); }
+      .orders { display:grid; gap:10px; }.order { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:8px 14px; padding:14px; border:1px solid var(--line); border-radius:12px; background:rgba(7,12,19,.5); }
+      .order-number { font-weight:700; }.order-meta,.order-date { margin-top:4px; color:var(--muted); font-size:11px; }.order-total { text-align:right; font-weight:700; white-space:nowrap; }.order-status { display:inline-flex; margin-top:6px; padding:4px 8px; border-radius:999px; color:#afc9ff; background:rgba(45,110,246,.14); font-size:10px; text-transform:capitalize; }
+      .order-actions { display:flex; justify-content:flex-end; margin-top:9px; }.cancel-order { padding:6px 9px; border:1px solid rgba(255,130,130,.28); border-radius:8px; color:#ffc0c0; background:rgba(125,33,43,.24); font-size:11px; cursor:pointer; }.cancel-order:hover { border-color:rgba(255,130,130,.65); background:rgba(125,33,43,.42); }.cancel-order:disabled { opacity:.6; cursor:wait; }
+      .empty { margin:0; padding:22px 12px; border:1px dashed #344157; border-radius:12px; color:var(--muted); text-align:center; line-height:1.6; }
+      .password-form { display:grid; gap:12px; }.password-form .field input { font-size:14px; }.security-link { margin:14px 0 0; color:var(--muted); font-size:12px; }
+      .admin-link { display:none; }.page-message { padding:26px; border:1px solid var(--line); border-radius:14px; color:var(--muted); background:var(--panel); }
+      .page-footer { display:flex; justify-content:flex-end; margin-top:20px; }
+      @media(max-width:800px) { .nav-links { gap:12px; }.columns { grid-template-columns:1fr; } }
+      @media(max-width:620px) { .wrap { width:calc(100% - 24px); }.nav { flex-wrap:wrap; padding:13px 0; }.nav-links { order:3; width:100%; overflow:auto; padding-bottom:3px; }.nav-actions { margin-left:auto; }.nav-user { display:none; } main { padding-top:30px; }.hero { align-items:flex-start; flex-direction:column; padding:19px; }.stats { gap:9px; }.stat { padding:13px; }.stat-value { font-size:22px; }.panel { padding:17px; } }
+      @media(max-width:420px) { .stats { grid-template-columns:1fr 1fr; }.stats .stat:last-child { grid-column:1/-1; }.profile-form { grid-template-columns:1fr; }.field.full,.form-footer { grid-column:auto; }.identity { align-items:flex-start; gap:13px; }.avatar { width:52px; height:52px; border-radius:15px; font-size:19px; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="/home"><b>N</b>NOVATEK</a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="/shop">Shop</a><a href="/categories">Categories</a><a href="/new-arrivals">New arrivals</a><a href="/deals">Deals</a>
+        </nav>
+        <div class="nav-actions"><a class="nav-user" href="/profile">My profile</a><a href="/cart">Cart</a><form action="/auth/logout" method="post"><button class="logout" type="submit">Sign out</button></form></div>
+      </div>
+    </header>
+    <main class="wrap">
+      <p class="eyebrow">YOUR NOVATEK ACCOUNT</p>
+      <div class="hero">
+        <div class="identity">
+          <div class="avatar" id="avatar" aria-hidden="true">N</div>
+          <div><h1 id="name">Loading your profile…</h1><p class="hero-email" id="email"></p><span class="role" id="role">Customer</span><p class="panel-note" id="memberSince"></p></div>
+        </div>
+        <a class="admin-link primary" id="adminLink" href="/admin">Open admin dashboard</a>
+      </div>
+      <section class="stats" aria-label="Order summary">
+        <article class="stat"><span class="stat-label">Total orders</span><strong class="stat-value" id="orderCount">—</strong></article>
+        <article class="stat"><span class="stat-label">Active orders</span><strong class="stat-value" id="activeOrders">—</strong></article>
+        <article class="stat"><span class="stat-label">Order value</span><strong class="stat-value" id="orderValue">—</strong></article>
+      </section>
+      <div id="pageMessage" class="page-message" hidden></div>
+      <div class="columns" id="profileContent" hidden>
+        <div class="stack">
+          <section class="panel" aria-labelledby="profileHeading">
+            <div class="panel-head"><div><h2 id="profileHeading">Personal information</h2><p class="panel-note">Your account contact details.</p></div><button class="button edit-button" type="button" data-edit="profileForm">Edit</button></div>
+            <div class="profile-display" id="profileDisplay">
+              <div class="profile-value"><span class="profile-label">Full name</span><span class="profile-text" id="displayName">—</span></div>
+              <div class="profile-value"><span class="profile-label">Email address</span><span class="profile-text" id="displayEmail">—</span></div>
+              <div class="profile-value full"><span class="profile-label">Phone number</span><span class="profile-text" id="displayPhone">—</span></div>
+            </div>
+            <form class="profile-form" id="profileForm" hidden>
+              <label class="field">Full name<input name="fullName" required minlength="2" maxlength="150" autocomplete="name"></label>
+              <label class="field">Email address<input name="email" type="email" readonly aria-describedby="emailNote"><span class="panel-note" id="emailNote">Email is your account sign-in and cannot be changed here.</span></label>
+              <label class="field full">Phone number<input name="phone" type="tel" minlength="6" maxlength="30" autocomplete="tel" placeholder="Add a phone number"></label>
+              <div class="form-actions"><button class="button primary" type="submit">Save changes</button><button class="button cancel-edit" type="button" data-cancel="profileForm">Cancel</button><p class="message" id="profileMessage" role="status" aria-live="polite"></p></div>
+            </form>
+          </section>
+          <section class="panel" aria-labelledby="addressHeading">
+            <div class="panel-head"><div><h2 id="addressHeading">Delivery address</h2><p class="panel-note">This saved location is used to prefill checkout.</p></div><button class="button edit-button" type="button" data-edit="addressForm">Edit</button></div>
+            <div class="profile-display" id="addressDisplay">
+              <div class="profile-value full"><span class="profile-label">Street address</span><span class="profile-text" id="displayAddress">—</span></div>
+              <div class="profile-value"><span class="profile-label">City</span><span class="profile-text" id="displayCity">—</span></div>
+              <div class="profile-value"><span class="profile-label">Postal code</span><span class="profile-text" id="displayPostalCode">—</span></div>
+            </div>
+            <form class="profile-form" id="addressForm" hidden>
+              <label class="field full">Street address<input name="address" minlength="5" maxlength="250" autocomplete="street-address" placeholder="House, street, area"></label>
+              <label class="field">City<input name="city" minlength="2" maxlength="100" autocomplete="address-level2" placeholder="City"></label>
+              <label class="field">Postal code<input name="postalCode" minlength="3" maxlength="20" autocomplete="postal-code" placeholder="Postal code"></label>
+              <div class="form-actions"><button class="button primary" type="submit">Save address</button><button class="button cancel-edit" type="button" data-cancel="addressForm">Cancel</button><p class="message" id="addressMessage" role="status" aria-live="polite"></p></div>
+            </form>
+          </section>
+          <section class="panel" aria-labelledby="securityHeading">
+            <div class="panel-head"><div><h2 id="securityHeading">Account security</h2><p class="panel-note">Use a password of at least 8 characters.</p></div></div>
+            <form class="password-form" id="passwordForm">
+              <label class="field">Current password<input type="password" name="currentPassword" autocomplete="current-password" required></label>
+              <label class="field">New password<input type="password" name="newPassword" autocomplete="new-password" minlength="8" required></label>
+              <div class="form-footer"><p class="message" id="passwordMessage" role="status" aria-live="polite"></p><button class="button" type="submit">Update password</button></div>
+            </form>
+          </section>
+        </div>
+        <section class="panel" aria-labelledby="ordersHeading">
+          <div class="panel-head"><div><h2 id="ordersHeading">Your orders</h2><p class="panel-note">Your latest purchases and delivery progress.</p></div></div>
+          <p class="message" id="orderMessage" role="status" aria-live="polite"></p>
+          <div class="orders" id="orders"></div>
+        </section>
+      </div>
+      <div class="page-footer">
+        <a class="button" href="/home">Continue shopping</a>
+      </div>
+    </main>
+    <script>
+      const money = value => new Intl.NumberFormat('en-US', { style:'currency', currency:'USD' }).format(Number(value));
+      const safe = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+      })[character]);
+
+      function showMessage(id, text, isError = false) {
+        const element = document.getElementById(id);
+        element.textContent = text;
+        element.classList.toggle('error', isError);
+      }
+
+      function displayValue(id, value) {
+        document.getElementById(id).textContent = value || 'Not added';
+      }
+
+      function renderProfileDetails(profile) {
+        displayValue('displayName', profile.full_name);
+        displayValue('displayEmail', profile.email);
+        displayValue('displayPhone', profile.phone);
+        displayValue('displayAddress', profile.address);
+        displayValue('displayCity', profile.city);
+        displayValue('displayPostalCode', profile.postal_code);
+      }
+
+      async function loadProfile() {
+        const response = await fetch('/api/account/profile');
+        if (response.status === 401) return window.location.replace('/login.html?next=%2Fprofile');
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Unable to load your profile.');
+        const { profile, orders, stats } = result;
+        const displayName = profile.full_name || 'Welcome';
+        document.getElementById('name').textContent = displayName;
+        document.getElementById('email').textContent = profile.email || 'Signed in with a linked social account.';
+        document.getElementById('role').textContent = profile.role || 'customer';
+        document.getElementById('avatar').textContent = displayName.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0].toUpperCase()).join('') || 'N';
+        document.getElementById('memberSince').textContent = profile.created_at
+          ? `Member since ${new Date(profile.created_at).toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' })}`
+          : '';
+        document.getElementById('orderCount').textContent = stats.order_count;
+        document.getElementById('activeOrders').textContent = stats.active_orders;
+        document.getElementById('orderValue').textContent = money(stats.order_value);
+        if (profile.role === 'admin') document.getElementById('adminLink').style.display = 'inline-flex';
+        renderProfileDetails(profile);
+        document.querySelector('#profileForm [name="fullName"]').value = profile.full_name || '';
+        document.querySelector('#profileForm [name="email"]').value = profile.email || '';
+        document.querySelector('#profileForm [name="phone"]').value = profile.phone || '';
+        document.querySelector('#addressForm [name="address"]').value = profile.address || '';
+        document.querySelector('#addressForm [name="city"]').value = profile.city || '';
+        document.querySelector('#addressForm [name="postalCode"]').value = profile.postal_code || '';
+        for (const formId of ['profileForm', 'addressForm']) {
+          document.getElementById(formId).hidden = true;
+          document.getElementById(formId.replace('Form', 'Display')).hidden = false;
+          document.querySelector(`[data-edit="${formId}"]`).hidden = false;
+        }
+        document.getElementById('orders').innerHTML = orders.length ? orders.map(order => `
+          <article class="order">
+            <div><div class="order-number">${safe(order.order_number)}</div><div class="order-meta">${Number(order.item_count)} item${Number(order.item_count) === 1 ? '' : 's'} <span class="order-status">${safe(order.status)}</span></div><div class="order-date">${new Date(order.created_at).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' })}</div></div>
+            <div><div class="order-total">${money(order.total)}</div>${['placed', 'processing'].includes(order.status) ? `<div class="order-actions"><button class="cancel-order" type="button" data-cancel-order="${Number(order.id)}">Cancel order</button></div>` : ''}</div>
+          </article>`).join('') : '<p class="empty">No orders yet. Your purchases and delivery updates will appear here.</p>';
+        document.getElementById('profileContent').hidden = false;
+      }
+
+      async function saveProfile(form, messageId) {
+        const button = form.querySelector('button[type="submit"]');
+        button.disabled = true;
+        showMessage(messageId, '');
+        try {
+          const profileForm = document.getElementById('profileForm');
+          const addressForm = document.getElementById('addressForm');
+          const payload = {
+            fullName: profileForm.elements.fullName.value,
+            phone: profileForm.elements.phone.value,
+            address: addressForm.elements.address.value,
+            city: addressForm.elements.city.value,
+            postalCode: addressForm.elements.postalCode.value
+          };
+          const response = await fetch('/api/account/profile', {
+            method:'PATCH',
+            headers:{ 'Content-Type':'application/json' },
+            body:JSON.stringify(payload)
+          });
+          const result = await response.json();
+          if (response.status === 401) return window.location.replace('/login.html?next=%2Fprofile');
+          if (!response.ok) throw new Error(result.error || 'Unable to save your profile.');
+          document.getElementById('name').textContent = result.profile.full_name;
+          document.getElementById('avatar').textContent = result.profile.full_name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0].toUpperCase()).join('') || 'N';
+          renderProfileDetails(result.profile);
+          document.querySelector('#profileForm [name="fullName"]').value = result.profile.full_name;
+          document.querySelector('#profileForm [name="phone"]').value = result.profile.phone || '';
+          document.querySelector('#addressForm [name="address"]').value = result.profile.address || '';
+          document.querySelector('#addressForm [name="city"]').value = result.profile.city || '';
+          document.querySelector('#addressForm [name="postalCode"]').value = result.profile.postal_code || '';
+          showMessage(messageId, result.message);
+          form.hidden = true;
+          document.getElementById(form.id.replace('Form', 'Display')).hidden = false;
+          document.querySelector(`[data-edit="${form.id}"]`).hidden = false;
+        } catch (error) {
+          showMessage(messageId, error.message, true);
+        } finally {
+          button.disabled = false;
+        }
+      }
+
+      document.getElementById('profileForm').addEventListener('submit', event => {
+        event.preventDefault();
+        saveProfile(event.currentTarget, 'profileMessage');
+      });
+      document.getElementById('addressForm').addEventListener('submit', event => {
+        event.preventDefault();
+        saveProfile(event.currentTarget, 'addressMessage');
+      });
+      document.querySelectorAll('[data-edit]').forEach(button => {
+        button.addEventListener('click', () => {
+          const form = document.getElementById(button.dataset.edit);
+          const display = document.getElementById(form.id.replace('Form', 'Display'));
+          form.hidden = false;
+          display.hidden = true;
+          button.hidden = true;
+          form.querySelector('input:not([readonly])')?.focus();
+        });
+      });
+      document.querySelectorAll('[data-cancel]').forEach(button => {
+        button.addEventListener('click', async () => {
+          const form = document.getElementById(button.dataset.cancel);
+          const editButton = document.querySelector(`[data-edit="${form.id}"]`);
+          try {
+            await loadProfile();
+            showMessage(form.id === 'profileForm' ? 'profileMessage' : 'addressMessage', '');
+          } catch (error) {
+            showMessage(form.id === 'profileForm' ? 'profileMessage' : 'addressMessage', error.message, true);
+          }
+          editButton.hidden = false;
+        });
+      });
+      document.getElementById('orders').addEventListener('click', async event => {
+        const button = event.target.closest('[data-cancel-order]');
+        if (!button || !window.confirm('Cancel this order? It will remain in your order history.')) return;
+        button.disabled = true;
+        try {
+          const response = await fetch(`/api/account/orders/${button.dataset.cancelOrder}/cancel`, { method:'POST' });
+          const result = await response.json();
+          if (response.status === 401) return window.location.replace('/login.html?next=%2Fprofile');
+          if (!response.ok) throw new Error(result.error || 'Unable to cancel this order.');
+          await loadProfile();
+          showMessage('orderMessage', result.message);
+        } catch (error) {
+          showMessage('orderMessage', error.message, true);
+          button.disabled = false;
+        }
+      });
+      document.getElementById('passwordForm').addEventListener('submit', async event => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const button = form.querySelector('button[type="submit"]');
+        button.disabled = true;
+        showMessage('passwordMessage', '');
+        try {
+          const response = await fetch('/api/account/password', {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body:JSON.stringify({
+              currentPassword: form.elements.currentPassword.value,
+              newPassword: form.elements.newPassword.value
+            })
+          });
+          const result = await response.json();
+          if (response.status === 401 && result.error === 'Please sign in to continue.') {
+            return window.location.replace('/login.html?next=%2Fprofile');
+          }
+          if (!response.ok) throw new Error(result.error || 'Could not change password.');
+          showMessage('passwordMessage', result.message);
+          form.reset();
+        } catch (error) {
+          showMessage('passwordMessage', error.message, true);
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+      loadProfile().catch(error => {
+        const message = document.getElementById('pageMessage');
+        message.hidden = false;
+        message.classList.add('error');
+        message.textContent = error.message;
+        document.getElementById('name').textContent = 'Your account';
+      });
+    </script>
+  </body>
+</html>

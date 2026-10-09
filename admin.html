@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b11" />
+    <title>Admin orders | NOVATEK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme:dark; --bg:#080b11; --panel:#121922; --line:rgba(255,255,255,.09); --text:#edf3ff; --muted:#9da9bc; --blue:#2d6ef6; }
+      * { box-sizing:border-box; }
+      [hidden] { display:none !important; }
+      body { margin:0; min-height:100vh; color:var(--text); font:14px 'DM Sans',sans-serif; background:radial-gradient(circle at 75% 0,rgba(28,70,148,.25),transparent 28%),linear-gradient(180deg,#060a10,#0a1018); }
+      a,button { color:inherit; font:inherit; }
+      a { text-decoration:none; }
+      .wrap { width:min(1200px,calc(100% - 40px)); margin:auto; }
+      header { border-bottom:1px solid var(--line); background:rgba(7,11,17,.88); }
+      .nav { min-height:70px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+      .brand { font:800 15px Manrope,sans-serif; letter-spacing:.16em; }
+      .brand b { margin-right:7px; color:#5588ff; font-size:23px; }
+      .nav-links { display:flex; align-items:center; gap:18px; color:#c8d3e5; }
+      .nav-links a:hover { color:#83adff; }
+      .logout { padding:9px 14px; border:1px solid var(--line); border-radius:999px; background:#121922; cursor:pointer; }
+      main { padding:48px 0 70px; }
+      .eyebrow { color:#83adff; font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
+      h1 { margin:9px 0; font:800 clamp(32px,5vw,48px)/1.1 Manrope,sans-serif; letter-spacing:-.04em; }
+      .intro { margin:0; color:var(--muted); line-height:1.6; }
+      .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin:30px 0 34px; }
+      .stat { min-width:0; padding:19px; border:1px solid var(--line); border-radius:15px; background:linear-gradient(150deg,#171f2a,#10151d); }
+      .stats { grid-template-columns:repeat(5,minmax(0,1fr)); }
+      .stat-label { color:var(--muted); font-size:12px; }
+      .stat-value { display:block; margin-top:8px; font:800 clamp(24px,3vw,34px)/1.1 Manrope,sans-serif; overflow-wrap:anywhere; }
+      .section-head { display:flex; align-items:end; justify-content:space-between; gap:16px; margin:0 0 14px; }
+      h2 { margin:0; font:700 21px Manrope,sans-serif; }
+      .section-note { color:var(--muted); font-size:12px; }
+      .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:15px; background:rgba(18,25,34,.92); }
+      table { width:100%; min-width:760px; border-collapse:collapse; text-align:left; }
+      th,td { padding:14px 16px; border-bottom:1px solid var(--line); vertical-align:middle; }
+      th { color:#aebbd0; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+      tbody tr:last-child td { border-bottom:0; }
+      td { color:#e4ebf6; font-size:13px; }
+      .order-number { color:#9fc0ff; font-weight:700; }
+      .subtext { display:block; margin-top:4px; color:var(--muted); font-size:11px; }
+      .status { display:inline-flex; padding:5px 9px; border-radius:999px; background:rgba(45,110,246,.16); color:#a9c5ff; font-size:11px; font-weight:700; text-transform:capitalize; }
+      .empty,.error { margin:0; padding:22px; color:var(--muted); }
+      .error { color:#ffb4b4; }
+      .refresh { border:1px solid #344157; border-radius:10px; padding:9px 13px; color:var(--text); background:#172232; font-weight:700; cursor:pointer; }
+      .refresh:hover { border-color:#5588ff; }
+      .admin-section { margin-top:42px; scroll-margin-top:24px; }
+      .toolbar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+      .toolbar input,.product-form input,.product-form select { min-height:40px; padding:9px 11px; border:1px solid #344157; border-radius:9px; color:var(--text); background:#0b111a; font:inherit; }
+      .toolbar input { width:min(270px,100%); }
+      .primary,.secondary,.danger,.icon-button { border:1px solid transparent; border-radius:9px; padding:10px 14px; color:#fff; font-weight:700; cursor:pointer; }
+      .primary { background:var(--blue); }.secondary { border-color:#344157; background:#172232; }.danger { border-color:rgba(255,100,100,.24); color:#ffc1c1; background:rgba(125,33,43,.38); }
+      .icon-button { margin:2px; padding:7px 10px; background:#172232; }
+      .product-form { display:none; margin:0 0 18px; padding:20px; border:1px solid var(--line); border-radius:15px; background:rgba(18,25,34,.95); }
+      .product-form.open { display:block; }
+      .form-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; }
+      .product-form label { display:grid; align-content:start; gap:6px; color:#bac6d8; font-size:12px; font-weight:600; }
+      .product-form .wide { grid-column:span 2; }
+      .form-actions { display:flex; gap:9px; margin-top:16px; }
+      .product-cell { display:flex; align-items:center; gap:11px; min-width:190px; }
+      .product-thumb { width:54px; height:44px; flex:none; border-radius:8px; object-fit:contain; background:#edf1f6; }
+      .inline-status { min-width:125px; padding:7px 8px; border:1px solid #344157; border-radius:8px; color:var(--text); background:#0b111a; }
+      .section-message { min-height:20px; margin:5px 0 10px; color:#9fdab7; font-size:13px; }
+      .section-message.error { color:#ffb4b4; }
+      .empty-state { padding:22px; color:var(--muted); text-align:center; }
+      .nav-links a[aria-current="page"] { color:#83adff; }
+      @media(max-width:760px) { .stats { grid-template-columns:repeat(2,minmax(0,1fr)); } .nav-links { gap:11px; font-size:12px; } main { padding-top:34px; } }
+      @media(max-width:760px) { .form-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+      @media(max-width:480px) { .wrap { width:calc(100% - 26px); } .nav { flex-wrap:wrap; padding:12px 0; } .nav-links { order:3; width:100%; overflow-x:auto; } .stats { gap:9px; } .stat { padding:15px; } .section-head { align-items:start; flex-direction:column; } .form-grid { grid-template-columns:1fr; } .product-form .wide { grid-column:auto; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="/home"><b>N</b>NOVATEK <span style="color:#9da9bc;font-size:11px;letter-spacing:.08em">ADMIN</span></a>
+        <nav class="nav-links" aria-label="Admin navigation">
+          <a href="/admin/orders" data-admin-nav="orders">Orders</a>
+          <a href="/admin/products" data-admin-nav="products">Products</a>
+          <a href="/admin/customers" data-admin-nav="customers">Customers</a>
+          <a href="/shop">Store</a>
+          <a href="/profile">Account</a>
+        </nav>
+        <form action="/auth/logout" method="post"><button class="logout" type="submit">Sign out</button></form>
+      </div>
+    </header>
+    <main class="wrap">
+      <p class="eyebrow">Store management</p>
+      <h1>Orders overview</h1>
+      <p class="intro">Check how many orders customers placed, their order status, and recent purchases.</p>
+
+      <section class="stats" aria-label="Store order statistics">
+        <article class="stat"><span class="stat-label">Total orders</span><strong class="stat-value" id="totalOrders">—</strong></article>
+        <article class="stat"><span class="stat-label">Needs attention</span><strong class="stat-value" id="openOrders">—</strong></article>
+        <article class="stat"><span class="stat-label">Fulfilled orders</span><strong class="stat-value" id="fulfilledOrders">—</strong></article>
+        <article class="stat"><span class="stat-label">Customers</span><strong class="stat-value" id="customerCount">—</strong></article>
+        <article class="stat"><span class="stat-label">Order value</span><strong class="stat-value" id="orderValue">—</strong></article>
+      </section>
+      <section class="admin-section" id="orders">
+        <div class="section-head">
+          <div><h2>Recent orders</h2><span class="section-note">Up to the latest 25 orders • cash on delivery</span></div>
+          <button type="button" class="refresh" id="refreshOrders">Refresh</button>
+        </div>
+        <div id="message" role="status" aria-live="polite"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Order</th><th>Customer</th><th>Location</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="admin-section" id="products">
+          <div class="section-head">
+            <div><h2>Product catalog</h2><span class="section-note" id="productCount">Manage store listings and prices</span></div>
+            <div class="toolbar">
+              <input id="productSearch" type="search" placeholder="Search products" aria-label="Search products">
+              <button type="button" class="primary" id="addProduct">Add product</button>
+            </div>
+          </div>
+          <form class="product-form" id="productForm">
+            <h2 id="productFormTitle">Add product</h2>
+            <div class="form-grid">
+              <label class="wide">Product name<input name="name" maxlength="150" required></label>
+              <label>Category<select name="categoryId" required></select></label>
+              <label>Price (USD)<input name="price" type="number" min="0.01" max="10000000" step="0.01" required></label>
+              <label>Compare-at price<input name="oldPrice" type="number" min="0.01" max="10000000" step="0.01" placeholder="Optional"></label>
+              <label>Badge text<input name="badge" maxlength="50" placeholder="Optional"></label>
+              <label>Badge style<select name="badgeType"><option value="">No badge</option><option value="new">New (blue)</option><option value="green">Sale (green)</option><option value="orange">Popular (orange)</option></select></label>
+              <label class="wide">Custom image URL<input name="imageUrl" type="url" maxlength="2000" placeholder="Leave empty to generate a product illustration"></label>
+            </div>
+            <p class="section-note">A custom image URL is optional. If blank, NOVATEK creates an illustration based on the product category.</p>
+            <div class="form-actions"><button type="submit" class="primary" id="saveProduct">Save product</button><button type="button" class="secondary" id="cancelProduct">Cancel</button></div>
+          </form>
+          <p class="section-message" id="productMessage" role="status" aria-live="polite"></p>
+          <div class="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Badge</th><th>Actions</th></tr></thead><tbody id="productsBody"></tbody></table></div>
+      </section>
+      <section class="admin-section" id="customers">
+          <div class="section-head"><div><h2>Customers</h2><span class="section-note">Registered store customers and order totals</span></div><button type="button" class="refresh" id="refreshCustomers">Refresh</button></div>
+          <p class="section-message" id="customerMessage" role="status" aria-live="polite"></p>
+          <div class="table-wrap"><table><thead><tr><th>Customer</th><th>Email</th><th>Phone</th><th>Orders</th><th>Order value</th><th>Joined</th></tr></thead><tbody id="customersBody"></tbody></table></div>
+      </section>
+    </main>
+    <script>
+      const money = value => new Intl.NumberFormat('en-US', { style:'currency', currency:'USD' }).format(Number(value));
+      const safe = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+      })[character]);
+      const statusOptions = ['placed', 'processing', 'shipped', 'delivered', 'completed', 'cancelled', 'refunded'];
+      const productForm = document.getElementById('productForm');
+      const adminSection = location.pathname.split('/').pop();
+      const activeSection = ['orders', 'products', 'customers'].includes(adminSection) ? adminSection : 'orders';
+      const sectionCopy = {
+        orders: ['Orders overview', 'Check order volume, delivery progress, and recent purchases.'],
+        products: ['Product management', 'Add, update, search, and remove products in your store.'],
+        customers: ['Customer directory', 'Review registered customers and their order history totals.']
+      }[activeSection];
+      let products = [];
+
+      document.title = `${sectionCopy[0]} | NOVATEK Admin`;
+      document.querySelector('main h1').textContent = sectionCopy[0];
+      document.querySelector('main .intro').textContent = sectionCopy[1];
+      document.querySelectorAll('[data-admin-nav]').forEach(link => {
+        if (link.dataset.adminNav === activeSection) link.setAttribute('aria-current', 'page');
+      });
+      for (const section of ['orders', 'products', 'customers']) {
+        document.getElementById(section).hidden = section !== activeSection;
+      }
+      document.querySelector('.stats').hidden = activeSection !== 'orders';
+
+      async function api(url, options = {}) {
+        const response = await fetch(url, {
+          ...options,
+          headers: { ...(options.body ? { 'Content-Type':'application/json' } : {}), ...options.headers }
+        });
+        if (response.status === 401) {
+          window.location.replace('/login.html?next=%2Fadmin');
+          throw new Error('Please sign in to continue.');
+        }
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'The request could not be completed.');
+        return result;
+      }
+
+      async function loadOrders() {
+        const message = document.getElementById('message');
+        const body = document.getElementById('ordersBody');
+        message.className = '';
+        message.textContent = '';
+        try {
+          const response = await fetch('/api/admin/summary');
+          if (response.status === 401) return window.location.replace('/login.html?next=%2Fadmin');
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.error || 'Could not load orders.');
+          document.getElementById('totalOrders').textContent = result.totals.total_orders;
+          document.getElementById('openOrders').textContent = result.totals.open_orders;
+          document.getElementById('fulfilledOrders').textContent = result.totals.fulfilled_orders;
+          document.getElementById('customerCount').textContent = result.totals.customers;
+          document.getElementById('orderValue').textContent = money(result.totals.order_value);
+          body.innerHTML = result.orders.map(order => `
+            <tr>
+              <td><span class="order-number">${safe(order.order_number)}</span><span class="subtext">${new Date(order.created_at).toLocaleString()}</span></td>
+              <td>${safe(order.shipping_name)}</td>
+              <td>${safe(order.shipping_city)}</td>
+              <td>${Number(order.item_count)}</td>
+              <td><strong>${money(order.total)}</strong></td>
+              <td><select class="inline-status" data-order-status="${Number(order.id)}" aria-label="Status for order ${safe(order.order_number)}">
+                ${statusOptions.map(status => `<option value="${status}" ${status === order.status ? 'selected' : ''}>${safe(status)}</option>`).join('')}
+              </select><button type="button" class="icon-button" data-save-order="${Number(order.id)}">Save</button></td>
+            </tr>`).join('');
+          if (!result.orders.length) body.innerHTML = '<tr><td colspan="6" class="empty">No orders have been placed yet.</td></tr>';
+        } catch (error) {
+          message.className = 'error';
+          message.textContent = error.message;
+        }
+      }
+
+      function setProductMessage(text = '', isError = false) {
+        const message = document.getElementById('productMessage');
+        message.textContent = text;
+        message.classList.toggle('error', isError);
+      }
+
+      async function loadCategories() {
+        const result = await api('/api/admin/categories');
+        document.querySelector('[name="categoryId"]').innerHTML = result.categories
+          .map(category => `<option value="${Number(category.id)}">${safe(category.name)}</option>`).join('');
+      }
+
+      async function loadProducts(search = '') {
+        try {
+          const result = await api(`/api/admin/products?search=${encodeURIComponent(search)}`);
+          products = result.products;
+          document.getElementById('productCount').textContent = `${products.length} products`;
+          document.getElementById('productsBody').innerHTML = products.map(product => `
+            <tr>
+              <td><div class="product-cell"><img class="product-thumb" src="${safe(product.image_url)}" alt="" loading="lazy"><span><strong>${safe(product.name)}</strong><span class="subtext">#${Number(product.id)}</span></span></div></td>
+              <td>${safe(product.category_name)}</td>
+              <td><strong>${money(product.price)}</strong>${product.old_price ? `<span class="subtext">Was ${money(product.old_price)}</span>` : ''}</td>
+              <td>${product.badge ? `<span class="status">${safe(product.badge)}</span>` : '—'}</td>
+              <td><button type="button" class="icon-button" data-edit-product="${Number(product.id)}">Edit</button><button type="button" class="icon-button danger" data-delete-product="${Number(product.id)}">Delete</button></td>
+            </tr>`).join('');
+          if (!products.length) document.getElementById('productsBody').innerHTML = '<tr><td colspan="5" class="empty-state">No products found. Add your first product.</td></tr>';
+        } catch (error) {
+          setProductMessage(error.message, true);
+        }
+      }
+
+      async function loadCustomers() {
+        const message = document.getElementById('customerMessage');
+        const body = document.getElementById('customersBody');
+        message.className = 'section-message';
+        message.textContent = '';
+        try {
+          const result = await api('/api/admin/customers');
+          body.innerHTML = result.customers.map(customer => `
+            <tr>
+              <td><strong>${safe(customer.full_name || 'Customer')}</strong><span class="subtext">#${Number(customer.id)}</span></td>
+              <td>${safe(customer.email || '—')}</td>
+              <td>${safe(customer.phone || '—')}</td>
+              <td>${Number(customer.order_count)}</td>
+              <td>${money(customer.order_value)}</td>
+              <td>${customer.created_at ? new Date(customer.created_at).toLocaleDateString() : '—'}</td>
+            </tr>`).join('');
+          if (!result.customers.length) body.innerHTML = '<tr><td colspan="6" class="empty-state">No customers have registered yet.</td></tr>';
+        } catch (error) {
+          message.classList.add('error');
+          message.textContent = error.message;
+        }
+      }
+
+      function openProductForm(product = null) {
+        productForm.reset();
+        productForm.dataset.productId = product ? String(product.id) : '';
+        document.getElementById('productFormTitle').textContent = product ? 'Edit product' : 'Add product';
+        document.getElementById('saveProduct').textContent = product ? 'Save changes' : 'Save product';
+        if (product) {
+          productForm.elements.name.value = product.name;
+          productForm.elements.categoryId.value = product.category_id;
+          productForm.elements.price.value = product.price;
+          productForm.elements.oldPrice.value = product.old_price || '';
+          productForm.elements.badge.value = product.badge || '';
+          productForm.elements.badgeType.value = product.badge_type || '';
+          productForm.elements.imageUrl.value = product.image_url.startsWith('/product-images/') ? '' : product.image_url;
+        }
+        setProductMessage();
+        productForm.classList.add('open');
+        productForm.scrollIntoView({ behavior:'smooth', block:'center' });
+        productForm.elements.name.focus();
+      }
+
+      document.getElementById('refreshOrders').addEventListener('click', loadOrders);
+      document.getElementById('refreshCustomers').addEventListener('click', loadCustomers);
+      document.getElementById('addProduct').addEventListener('click', () => openProductForm());
+      document.getElementById('cancelProduct').addEventListener('click', () => productForm.classList.remove('open'));
+      productForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = document.getElementById('saveProduct');
+        button.disabled = true;
+        setProductMessage();
+        const values = Object.fromEntries(new FormData(productForm));
+        const productId = productForm.dataset.productId;
+        try {
+          await api(productId ? `/api/admin/products/${productId}` : '/api/admin/products', {
+            method: productId ? 'PATCH' : 'POST',
+            body: JSON.stringify(values)
+          });
+          productForm.classList.remove('open');
+          await loadProducts(document.getElementById('productSearch').value.trim());
+          setProductMessage(productId ? 'Product updated.' : 'Product added.');
+        } catch (error) {
+          setProductMessage(error.message, true);
+        } finally {
+          button.disabled = false;
+        }
+      });
+      document.getElementById('productSearch').addEventListener('input', event => {
+        window.clearTimeout(event.target.searchTimer);
+        event.target.searchTimer = window.setTimeout(() => loadProducts(event.target.value.trim()), 250);
+      });
+      document.getElementById('productsBody').addEventListener('click', async event => {
+        const editButton = event.target.closest('[data-edit-product]');
+        if (editButton) {
+          const product = products.find(item => item.id === Number(editButton.dataset.editProduct));
+          if (product) openProductForm(product);
+          return;
+        }
+        const deleteButton = event.target.closest('[data-delete-product]');
+        if (!deleteButton) return;
+        const product = products.find(item => item.id === Number(deleteButton.dataset.deleteProduct));
+        if (!product || !window.confirm(`Delete "${product.name}"? Active cart entries will be removed; order history will be kept.`)) return;
+        deleteButton.disabled = true;
+        try {
+          const result = await api(`/api/admin/products/${product.id}`, { method:'DELETE' });
+          await loadProducts(document.getElementById('productSearch').value.trim());
+          setProductMessage(result.message);
+        } catch (error) {
+          setProductMessage(error.message, true);
+          deleteButton.disabled = false;
+        }
+      });
+      document.getElementById('ordersBody').addEventListener('click', async event => {
+        const button = event.target.closest('[data-save-order]');
+        if (!button) return;
+        const status = document.querySelector(`[data-order-status="${Number(button.dataset.saveOrder)}"]`).value;
+        button.disabled = true;
+        try {
+          await api(`/api/admin/orders/${button.dataset.saveOrder}/status`, { method:'PATCH', body:JSON.stringify({ status }) });
+          await loadOrders();
+          document.getElementById('message').className = 'section-message';
+          document.getElementById('message').textContent = 'Order status updated.';
+        } catch (error) {
+          document.getElementById('message').className = 'error';
+          document.getElementById('message').textContent = error.message;
+          button.disabled = false;
+        }
+      });
+      const initialLoads = activeSection === 'orders'
+        ? [loadOrders()]
+        : activeSection === 'products'
+          ? [loadCategories(), loadProducts()]
+          : [loadCustomers()];
+      Promise.all(initialLoads)
+        .catch(error => {
+          if (activeSection === 'products') {
+            setProductMessage(error.message, true);
+          } else if (activeSection === 'customers') {
+            const message = document.getElementById('customerMessage');
+            message.classList.add('error');
+            message.textContent = error.message;
+          } else {
+            document.getElementById('message').className = 'error';
+            document.getElementById('message').textContent = error.message;
+          }
+        });
+    </script>
+  </body>
+</html>

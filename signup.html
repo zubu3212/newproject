@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070a10" />
+    <title>Create account | NOVATEK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bg:#080b11; --panel:#121922; --line:rgba(255,255,255,.09); --text:#edf3ff; --muted:#9ca8bc; --blue:#2d6ef6; }
+      * { box-sizing:border-box; }
+      body { min-height:100vh; margin:0; padding:24px; display:grid; place-items:center; color:var(--text); font:14px 'DM Sans',sans-serif; background:radial-gradient(circle at 20% 20%,rgba(42,77,188,.24),transparent 22%),linear-gradient(135deg,#070b12,#0a111b 45%,#060a10); }
+      a { color:inherit; text-decoration:none; }
+      .card { width:min(560px,100%); padding:36px; border:1px solid var(--line); border-radius:24px; background:rgba(15,21,31,.94); box-shadow:0 30px 70px rgba(0,0,0,.38); }
+      .brand { display:flex; align-items:center; gap:10px; margin-bottom:32px; font-size:12px; font-weight:700; letter-spacing:.2em; }
+      .brand-mark { color:#79a9ff; font:800 27px Manrope,sans-serif; }
+      h1 { margin:0 0 8px; font:750 32px Manrope,sans-serif; letter-spacing:-.05em; }
+      .sub { color:var(--muted); margin:0 0 25px; }
+      form { display:grid; gap:15px; }
+      .field { display:grid; gap:7px; }
+      .field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
+      .field-grid .wide { grid-column:1/-1; }
+      label { color:#d9e3f8; font-size:12px; font-weight:600; }
+      input { height:49px; padding:0 14px; border:1px solid rgba(143,160,192,.2); border-radius:12px; background:rgba(255,255,255,.025); color:var(--text); outline:0; font:inherit; }
+      input:focus { border-color:var(--blue); box-shadow:0 0 0 4px rgba(45,110,246,.13); }
+      button { height:50px; border:0; border-radius:12px; color:white; background:linear-gradient(180deg,#2d6ef6,#123dba); font:700 14px 'DM Sans',sans-serif; cursor:pointer; }
+      button:disabled { opacity:.65; cursor:wait; }
+      .message { min-height:20px; color:#ff9999; font-size:13px; }
+      .footer { margin:20px 0 0; color:var(--muted); text-align:center; }
+      .footer a { color:#8dbaff; }
+      .back { display:inline-block; margin-top:18px; color:var(--muted); font-size:12px; }
+      @media(max-width:480px) { body { padding:14px; } .card { padding:26px 22px; } .field-grid { grid-template-columns:1fr; } .field-grid .wide { grid-column:auto; } }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <a class="brand" href="/login.html"><span class="brand-mark">N</span><span>NOVATEK</span></a>
+      <h1>Create your account</h1>
+      <p class="sub">Add your contact and delivery details to set up your NOVATEK profile.</p>
+      <form id="signupForm">
+        <div class="field-grid">
+          <div class="field wide">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" autocomplete="name" required minlength="2" maxlength="150" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required maxlength="255" />
+          </div>
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" required minlength="6" maxlength="30" />
+          </div>
+          <div class="field wide">
+            <label for="address">Street address</label>
+            <input id="address" name="address" autocomplete="street-address" required minlength="5" maxlength="250" placeholder="House, street, area" />
+          </div>
+          <div class="field">
+            <label for="city">City</label>
+            <input id="city" name="city" autocomplete="address-level2" required minlength="2" maxlength="100" />
+          </div>
+          <div class="field">
+            <label for="postalCode">Postal code</label>
+            <input id="postalCode" name="postalCode" autocomplete="postal-code" required minlength="3" maxlength="20" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required />
+        </div>
+        <div class="field">
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required />
+        </div>
+        <p id="formMessage" class="message" aria-live="polite"></p>
+        <button id="submitButton" type="submit">Create account</button>
+      </form>
+      <p class="footer">Already have an account? <a href="/login.html">Sign in</a></p>
+      <a class="back" href="/login.html">← Back to login</a>
+    </main>
+    <script>
+      const form = document.getElementById('signupForm');
+      const message = document.getElementById('formMessage');
+      const button = document.getElementById('submitButton');
+
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        message.textContent = '';
+        const password = document.getElementById('password').value;
+        if (password !== document.getElementById('confirmPassword').value) {
+          message.textContent = 'Passwords do not match.';
+          return;
+        }
+
+        button.disabled = true;
+        button.textContent = 'Creating account…';
+        try {
+          const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              fullName: document.getElementById('fullName').value,
+              email: document.getElementById('email').value,
+              phone: document.getElementById('phone').value,
+              address: document.getElementById('address').value,
+              city: document.getElementById('city').value,
+              postalCode: document.getElementById('postalCode').value,
+              password
+            })
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || 'Could not create your account.');
+          window.location.assign('/home');
+        } catch (error) {
+          message.textContent = error.message;
+          button.disabled = false;
+          button.textContent = 'Create account';
+        }
+      });
+    </script>
+  </body>
+</html>
